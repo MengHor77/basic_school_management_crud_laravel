@@ -11,21 +11,30 @@
 <body class="bg-gray-100 text-gray-800">
 
     <!-- Header -->
-    <header class="bg-indigo-600 text-white p-4 flex justify-between">
+    <header class="bg-indigo-600 text-white p-4 flex justify-between items-center">
         <div class="container mx-auto">
             <h1 class="text-2xl font-bold">Welcome to School Management!</h1>
         </div>
+
         <div class="flex flex-col items-center">
-            <!-- Login link for users -->
-            <p>
+            @auth('web') {{-- Check if frontend user is logged in --}}
+                <form action="{{ route('user.logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="hover:underline">Logout</button>
+                </form>
+
+                <a href="#">
+                    <img src="{{ asset('storage/profile/' . Auth::guard('web')->user()->image ?? 'image.png') }}"
+                        alt="Profile"
+                        class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
+                </a>
+            @else
                 <a href="{{ route('user.login') }}" class="hover:underline">Login</a>
-            </p>
-            <p>
                 <a href="{{ route('user.login') }}">
                     <img src="{{ asset('storage/profile/image.png') }}" alt="Profile"
-                        class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition">
+                        class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
                 </a>
-            </p>
+            @endauth
         </div>
     </header>
 
