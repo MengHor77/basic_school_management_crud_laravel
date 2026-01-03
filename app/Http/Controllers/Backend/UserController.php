@@ -3,13 +3,54 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    // Show list of users (exclude deleted)
+    // ============================
+    // Admin Authentication Methods
+    // ============================
+
+    // Show admin login form
+    public function showLoginForm()
+    {
+        return view('backend.auth.login');
+    }
+
+    // Process admin login
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        return back()->with('error', 'Invalid email or password.');
+    }
+
+    // Logout admin
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login');
+    }
+
+    // ============================
+    // User Management Methods
+    // ============================
+
+    // List users (exclude soft-deleted)
     public function index()
     {
         $users = User::where('is_delete', 0)->get();
@@ -32,7 +73,6 @@ class UserController extends Controller
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-
         User::create($validated);
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
@@ -64,11 +104,10 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }
 
-    // Soft-delete user by setting is_delete = 1
+    // Soft-delete user
     public function destroy(User $user)
     {
         $user->update(['is_delete' => 1]);
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 }
-

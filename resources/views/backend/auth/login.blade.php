@@ -8,7 +8,7 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
         @if($errors->any())
             <div class="mb-4 text-red-600">
@@ -40,6 +40,16 @@
                 Login
             </button>
         </form>
+
+        <!-- Register Link -->
+        <div class="mt-6 text-center">
+            <p class="text-sm">
+                Don't have an account? 
+                <a href="{{ route('admin.register') }}" class="text-indigo-600 hover:underline font-semibold">
+                    Register
+                </a>
+            </p>
+        </div>
     </div>
 
 </body>
