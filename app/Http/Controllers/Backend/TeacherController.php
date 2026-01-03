@@ -56,32 +56,31 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Teacher $teacher)
     {
-        $teacher = Teacher::findOrFail($id);
         return view('backend.teachers.edit', compact('teacher'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $teacher = Teacher::findOrFail($id);
+public function update(Request $request, Teacher $teacher)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:teachers,email,' . $teacher->id,
+        'phone' => 'nullable|string|max:20',
+        'subject' => 'nullable|string|max:255',
+        'address' => 'nullable|string',
+        'is_active' => 'required|boolean',
+    ]);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:teachers,email,' . $teacher->id,
-            'phone' => 'nullable|string|max:20',
-            'subject' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
-            'is_active' => 'required|boolean',
-        ]);
+    $teacher->update($request->all());
 
-        $teacher->update($request->all());
+    return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully.');
+}
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully.');
-    }
 
     /**
      * Remove the specified resource from storage.

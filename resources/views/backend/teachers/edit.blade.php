@@ -3,6 +3,7 @@
 @section('content')
     <h1 class="text-3xl font-bold mb-6">Edit Teacher</h1>
 
+    {{-- Display Validation Errors --}}
     @if ($errors->any())
         <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             <ul class="list-disc list-inside">
@@ -13,10 +14,12 @@
         </div>
     @endif
 
+    {{-- Edit Teacher Form --}}
     <form action="{{ route('admin.teachers.update', $teacher->id) }}" method="POST" class="space-y-6 max-w-lg">
         @csrf
-        @method('PUT')
+        @method('PUT') {{-- VERY IMPORTANT to trigger update method --}}
 
+        {{-- Name --}}
         <div>
             <label for="name" class="block mb-1 font-semibold">Name</label>
             <input
@@ -29,6 +32,7 @@
             >
         </div>
 
+        {{-- Email --}}
         <div>
             <label for="email" class="block mb-1 font-semibold">Email</label>
             <input
@@ -41,6 +45,7 @@
             >
         </div>
 
+        {{-- Phone --}}
         <div>
             <label for="phone" class="block mb-1 font-semibold">Phone</label>
             <input
@@ -52,6 +57,7 @@
             >
         </div>
 
+        {{-- Subject --}}
         <div>
             <label for="subject" class="block mb-1 font-semibold">Subject</label>
             <input
@@ -63,6 +69,7 @@
             >
         </div>
 
+        {{-- Address --}}
         <div>
             <label for="address" class="block mb-1 font-semibold">Address</label>
             <textarea
@@ -73,6 +80,7 @@
             >{{ old('address', $teacher->address) }}</textarea>
         </div>
 
+        {{-- Active --}}
         <div>
             <label for="is_active" class="block mb-1 font-semibold">Active</label>
             <select
@@ -86,6 +94,7 @@
             </select>
         </div>
 
+        {{-- Buttons --}}
         <div class="flex space-x-4">
             <button
                 type="submit"
