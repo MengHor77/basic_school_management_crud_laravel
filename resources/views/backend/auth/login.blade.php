@@ -40,16 +40,6 @@
                 Login
             </button>
         </form>
-
-        <!-- Register Link -->
-        <div class="mt-6 text-center">
-            <p class="text-sm">
-                Don't have an account? 
-                <a href="{{ route('admin.register') }}" class="text-indigo-600 hover:underline font-semibold">
-                    Register
-                </a>
-            </p>
-        </div>
     </div>
 
 </body>

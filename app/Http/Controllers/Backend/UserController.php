@@ -4,53 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // ============================
-    // Admin Authentication Methods
-    // ============================
-
-    // Show admin login form
-    public function showLoginForm()
-    {
-        return view('backend.auth.login');
-    }
-
-    // Process admin login
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
-        return back()->with('error', 'Invalid email or password.');
-    }
-
-    // Logout admin
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('admin.login');
-    }
-
-    // ============================
-    // User Management Methods
-    // ============================
-
-    // List users (exclude soft-deleted)
+    // List users
     public function index()
     {
         $users = User::where('is_delete', 0)->get();
@@ -78,7 +37,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
-    // Show form to edit user
+    // Edit user
     public function edit(User $user)
     {
         return view('backend.users.edit', compact('user'));
@@ -88,8 +47,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
@@ -104,7 +63,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }
 
-    // Soft-delete user
+    // Soft delete
     public function destroy(User $user)
     {
         $user->update(['is_delete' => 1]);
