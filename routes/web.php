@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\MyCourseController;
+
 use App\Http\Controllers\Frontend\UserController as FrontUserController;
 
 // ----------------------
@@ -29,6 +31,7 @@ use App\Http\Controllers\Backend\SettingController;
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 Route::get('/about', [AboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [ContactController::class, 'index'])->name('frontend.contact');
+Route::get('/my-course', [MyCourseController::class, 'index'])->name('frontend.myCourse');
 
 // ----------------------
 // Frontend User Authentication

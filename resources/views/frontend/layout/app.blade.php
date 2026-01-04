@@ -42,6 +42,7 @@
     <nav class="bg-indigo-500 text-white p-2">
         <div class="container mx-auto flex space-x-6">
             <a href="{{ route('frontend.home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('frontend.myCourse') }}" class="hover:underline">My Course</a>
             <a href="{{ route('frontend.about') }}" class="hover:underline">About</a>
             <a href="{{ route('frontend.contact') }}" class="hover:underline">Contact</a>
         </div>
