@@ -21,6 +21,11 @@
                 <p class="text-sm">
                     👥 Capacity: {{ $course->capacity }}
                 </p>
+                <form action="">
+                   <div >
+                     <button class ="w-max bg-indigo-600 mt-5 px-3 py-2 rounded-md text-white">enroll</button>
+                   </div>
+                </form>
             </div>
         @endforeach
     </div>
