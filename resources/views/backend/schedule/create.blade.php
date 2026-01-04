@@ -1,6 +1,8 @@
 @extends('backend.layouts.app')
 
 @section('content')
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+
     <h1 class="text-2xl font-bold mb-4">Add New Schedule</h1>
 
     <form action="{{ route('admin.schedule.store') }}" method="POST" class="space-y-4">
@@ -57,5 +59,6 @@
 
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
         <a href="{{ route('admin.schedule.index') }}" class="text-gray-600 hover:underline ml-4">Cancel</a>
-    </form>
+    </form>        
+    </div>
 @endsection

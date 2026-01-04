@@ -1,10 +1,11 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    <h1 class="text-3xl font-bold mb-6">Add New Teacher</h1>
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+<h1 class="text-3xl font-bold mb-6 text-center">Add New Teacher</h1>
 
     @if ($errors->any())
-        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div class=" mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             <ul class="list-disc list-inside">
                 @foreach ($errors->all() as $error)
                    <li>{{ $error }}</li>
@@ -13,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.teachers.store') }}" method="POST" class="space-y-6 max-w-lg">
+    <form action="{{ route('admin.teachers.store') }}" method="POST" class=" space-y-6">
         @csrf
 
         <div>
@@ -100,4 +101,5 @@
             </a>
         </div>
     </form>
+</div>
 @endsection

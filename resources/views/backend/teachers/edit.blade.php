@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('content')
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
     <h1 class="text-3xl font-bold mb-6">Edit Teacher</h1>
 
     {{-- Display Validation Errors --}}
@@ -110,4 +111,5 @@
             </a>
         </div>
     </form>
+</div>
 @endsection
