@@ -13,7 +13,7 @@
     <div class="flex h-screen">
 
         <!-- Sidebar Desktop -->
-        <aside id="sidebar" class="bg-indigo-700 text-white w-64 flex flex-col transition-all duration-300 hidden md:flex">
+        <aside id="sidebar" class="bg-indigo-700 text-white w-64 flex-col transition-all duration-300 hidden md:flex">
 
             <!-- Header -->
             <div class="flex items-center justify-between p-4 bg-indigo-800 border-b border-indigo-600">
