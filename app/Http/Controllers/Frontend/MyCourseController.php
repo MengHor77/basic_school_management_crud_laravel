@@ -39,4 +39,18 @@ class MyCourseController extends Controller
 
         return redirect()->back()->with('success', 'Enrolled successfully');
     }
+    public function remove($id)
+    {
+        $myCourse = MyCourse::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($myCourse) {
+            $myCourse->delete();
+            return redirect()->back()->with('success', 'Course removed successfully.');
+        }
+
+        return redirect()->back()->with('error', 'Course not found or you are not authorized.');
+    }
+
 }

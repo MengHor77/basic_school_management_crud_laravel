@@ -42,6 +42,11 @@ Route::post('/courses/{id}/enroll', [MyCourseController::class, 'enroll'])
     ->middleware('auth')
     ->name('courses.enroll');
 
+    // Remove a course from My Courses
+Route::post('/my-course/{id}/remove', [MyCourseController::class, 'remove'])
+    ->middleware('auth')
+    ->name('myCourse.remove');
+
 // ----------------------
 // Frontend User Authentication
 
