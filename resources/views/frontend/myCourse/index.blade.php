@@ -4,57 +4,73 @@
 
 @section('content')
 
-<h2 class="text-3xl font-bold mb-4">My Courses</h2>
+{{-- ================= PAGE HEADER ================= --}}
+<div class="flex items-center justify-between mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">My Courses</h2>
+</div>
 
-{{-- Success Message --}}
+{{-- ================= FLASH MESSAGES ================= --}}
 @if(session('success'))
-<div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
-    {{ session('success') }}
+<div class="mb-6 flex items-center gap-3 p-4 rounded-lg bg-green-50 text-green-700 border border-green-200">
+    <span class="font-semibold">✔</span>
+    <span>{{ session('success') }}</span>
 </div>
 @endif
 
-{{-- Error Message --}}
 @if(session('error'))
-<div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-    {{ session('error') }}
+<div class="mb-6 flex items-center gap-3 p-4 rounded-lg bg-red-50 text-red-700 border border-red-200">
+    <span class="font-semibold">✖</span>
+    <span>{{ session('error') }}</span>
 </div>
 @endif
 
+{{-- ================= COURSE LIST ================= --}}
 @if($myCourses->count())
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     @foreach($myCourses as $myCourse)
-    <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-bold text-lg">
-            {{ $myCourse->course->title }}
-        </h3>
+    <div class="bg-white rounded-xl shadow-sm border hover:shadow-md transition">
 
-        <p class="text-gray-600 mt-2">
-            {{ $myCourse->course->description }}
-        </p>
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900">
+                {{ $myCourse->course->title }}
+            </h3>
 
-        <p class="text-sm mt-2">
-            📅 {{ $myCourse->course->start_date }}
-            →
-            {{ $myCourse->course->end_date }}
-        </p>
+            <p class="mt-3 text-sm text-gray-600 leading-relaxed">
+                {{ Str::limit($myCourse->course->description, 130) }}
+            </p>
 
-        <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST">
-            @csrf
-            <button class="mt-3 inline-flex items-center px-4 py-2
-           bg-red-600 text-white text-sm font-semibold
-           rounded-lg shadow
-           hover:bg-red-700
-           focus:outline-none focus:ring-2 focus:ring-red-400
-           transition">
-                Remove
-            </button>
+            <div class="mt-4 text-sm text-gray-500">
+                📅 {{ $myCourse->course->start_date }} → {{ $myCourse->course->end_date }}
+            </div>
 
-        </form>
+            {{-- ACTION --}}
+            <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST" class="mt-6">
+                @csrf
+                <button
+                    class="w-full inline-flex items-center justify-center gap-2
+                    py-2.5 rounded-lg
+                    bg-red-600 text-white text-sm font-semibold
+                    hover:bg-red-700
+                    focus:outline-none focus:ring-2 focus:ring-red-400
+                    transition">
+                    Remove Course
+                </button>
+            </form>
+        </div>
+
     </div>
     @endforeach
 </div>
 @else
-<p>You have not enrolled in any courses.</p>
+<div class="bg-white rounded-xl shadow-sm border p-8 text-center text-gray-600">
+    <p class="text-lg font-medium">You have not enrolled in any courses yet.</p>
+    <a href="{{ route('frontend.home') }}"
+       class="inline-block mt-4 px-6 py-2.5 rounded-lg
+       bg-indigo-600 text-white text-sm font-semibold
+       hover:bg-indigo-700 transition">
+        Browse Courses
+    </a>
+</div>
 @endif
 
 @endsection
