@@ -3,65 +3,103 @@
 @section('title', 'User Login')
 
 @section('content')
-<div class="max-w-md mx-auto mt-10 bg-white p-6 rounded shadow">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-    @if($errors->any())
-        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-            <ul class="list-disc list-inside">
+<div class="min-h-[70vh] flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border p-8">
+
+        {{-- Header --}}
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">Welcome Back</h2>
+            <p class="text-sm text-gray-500 mt-1">Sign in to continue</p>
+        </div>
+
+        {{-- Error Messages --}}
+        @if($errors->any())
+        <div class="mb-6 rounded-lg bg-red-50 border border-red-200 p-4 text-red-700">
+            <ul class="list-disc list-inside text-sm space-y-1">
                 @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
-    @endif
+        @endif
 
-    <form action="{{ route('user.login.submit') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="email" class="block mb-1 font-semibold">Email</label>
-            <input type="email" name="email" id="email"
-                value="{{ old('email') }}"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
+        {{-- Login Form --}}
+        <form action="{{ route('user.login.submit') }}" method="POST" class="space-y-5">
+            @csrf
 
-        <div class="mb-4 relative">
-            <label for="password" class="block mb-1 font-semibold">Password</label>
-            <!-- Wrapper div to position emoji -->
-            <div class="relative">
-                <input type="password" name="password" id="password"
-                    class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 pr-10">
-
-                <!-- Emoji Button -->
-                <button type="button" id="togglePassword"
-                    class="absolute inset-y-0 right-2 flex items-center text-gray-500 text-xl hover:text-gray-700">
-                    👁️
-                </button>
+            {{-- Email --}}
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                </label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value="{{ old('email') }}"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2.5
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
+
+            {{-- Password --}}
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    Password
+                </label>
+
+                <div class="relative">
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-2.5 pr-12
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+
+                    {{-- Toggle Icon --}}
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="absolute inset-y-0 right-3 flex items-center text-xl text-gray-500 hover:text-gray-700 transition">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            {{-- Submit --}}
+            <button
+                type="submit"
+                class="w-full py-3 rounded-lg
+                bg-indigo-600 text-white text-sm font-semibold
+                hover:bg-indigo-700
+                focus:outline-none focus:ring-2 focus:ring-indigo-400
+                transition">
+                Login
+            </button>
+        </form>
+
+        {{-- Footer --}}
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Don’t have an account?
+            <a href="{{ route('user.register') }}" class="text-indigo-600 font-semibold hover:underline">
+                Register here
+            </a>
         </div>
-
-        <button type="submit"
-            class="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700 transition">
-            Login
-        </button>
-    </form>
-
-    <p class="mt-4 text-center text-gray-700">
-        Don't have an account? 
-        <a href="{{ route('user.register') }}" class="text-indigo-600 hover:underline">Register here</a>
-    </p>
+    </div>
 </div>
 
+{{-- Password Toggle Script --}}
 <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
 
-    togglePassword.addEventListener('click', function () {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-
-        // Toggle emoji
-        this.textContent = type === 'password' ? '👁️' : '🙈';
+    togglePassword.addEventListener('click', () => {
+        const isPassword = password.type === 'password';
+        password.type = isPassword ? 'text' : 'password';
+        togglePassword.textContent = isPassword ? '🙈' : '👁️';
     });
 </script>
+
 @endsection
