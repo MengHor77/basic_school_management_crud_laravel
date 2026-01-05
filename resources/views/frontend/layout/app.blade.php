@@ -93,9 +93,9 @@
         <!-- Navigation Links -->
         <div class="flex gap-6 text-sm">
             <a href="{{ route('frontend.home') }}" class="hover:text-gray-900 transition-colors font-medium">Home</a>
+           <a href="{{ route('frontend.myCourse') }}" class="hover:text-gray-900 transition-colors font-medium">My Courses</a>
             <a href="{{ route('frontend.about') }}" class="hover:text-gray-900 transition-colors font-medium">About Us</a>
             <a href="{{ route('frontend.contact') }}" class="hover:text-gray-900 transition-colors font-medium">Contact</a>
-            <a href="{{ route('frontend.myCourse') }}" class="hover:text-gray-900 transition-colors font-medium">My Courses</a>
         </div>
 
         <!-- Social Media Icons -->
