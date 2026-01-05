@@ -8,54 +8,83 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 antialiased">
 
-    <!-- Header -->
-    <header class="bg-indigo-600 text-white p-4 flex justify-between items-center">
-        <div class="container mx-auto">
-            <h1 class="text-2xl font-bold">Welcome to School Management!</h1>
-        </div>
+    <!-- ================= HEADER ================= -->
+    <header class="bg-indigo-300 shadow-sm border-b">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
-        <div class="flex flex-col items-center">
-            @auth('web') {{-- Check if frontend user is logged in --}}
-            <form action="{{ route('user.logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="hover:underline">Logout</button>
-            </form>
+            <!-- Logo / Title -->
+            <h1 class="text-xl font-bold text-indigo-600">
+                School Management
+            </h1>
 
-            <a href="#">
+            <!-- Auth Area -->
+            <div class="flex items-center gap-4">
+                @auth('web')
+                <!-- Profile -->
                 <img src="{{ asset('storage/profile/' . (Auth::guard('web')->user()->image ?? 'image.png')) }}"
-                    class="w-10 h-10 rounded-full border border-white">
+                    class="w-10 h-10 rounded-full border border-gray-300 object-cover">
 
-            </a>
-            @else
-            <a href="{{ route('user.login') }}" class="hover:underline">Login</a>
-            <a href="{{ route('user.login') }}">
-                <img src="{{ asset('storage/profile/image.png') }}" alt="Profile"
-                    class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
-            </a>
-            @endauth
+                <!-- Logout -->
+                <form action="{{ route('user.logout') }}" method="POST">
+                    @csrf
+                    <button class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
+                        Logout
+                    </button>
+                </form>
+                @else
+                <a href="{{ route('user.login') }}"
+                    class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
+                    Login
+                </a>
+
+                <img src="{{ asset('storage/profile/image.png') }}"
+                    class="w-10 h-10 rounded-full border border-gray-300 object-cover">
+                @endauth
+            </div>
+
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="bg-indigo-500 text-white p-2">
-        <div class="container mx-auto flex space-x-6">
-            <a href="{{ route('frontend.home') }}" class="hover:underline">Home</a>
-            <a href="{{ route('frontend.myCourse') }}" class="hover:underline">My Course</a>
-            <a href="{{ route('frontend.about') }}" class="hover:underline">About</a>
-            <a href="{{ route('frontend.contact') }}" class="hover:underline">Contact</a>
+    <!-- ================= NAVIGATION ================= -->
+    <nav class="bg-indigo-600">
+        <div class="container mx-auto px-6">
+            <ul class="flex gap-6 py-3 text-sm font-medium text-white">
+                <li>
+                    <a href="{{ route('frontend.home') }}" class="hover:text-indigo-200 transition">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.myCourse') }}" class="hover:text-indigo-200 transition">
+                        My Courses
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.about') }}" class="hover:text-indigo-200 transition">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.contact') }}" class="hover:text-indigo-200 transition">
+                        Contact
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="container mx-auto p-6">
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container mx-auto px-6 py-8 min-h-[70vh]">
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center p-4">
-        <p>&copy; {{ date('Y') }} My Website. All rights reserved.</p>
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-indigo-300 border-t">
+        <div class="container mx-auto px-6 py-4 text-center text-sm text-gray-500">
+            &copy; {{ date('Y') }} School Management System. All rights reserved.
+        </div>
     </footer>
 
 </body>
