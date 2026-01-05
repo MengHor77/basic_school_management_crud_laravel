@@ -44,4 +44,9 @@ class User extends Authenticatable
         'password' => 'hashed', // Laravel 12+ auto hashing
         'is_delete' => 'boolean', // Cast is_delete as boolean
     ];
+     public function myCourses()
+     {
+            return $this->hasMany(MyCourse::class);
+    }
+
 }

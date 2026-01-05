@@ -17,4 +17,9 @@ class Course extends Model
         'capacity',
         'is_active',
     ];
+
+    public function myCourses()
+    {
+        return $this->hasMany(MyCourse::class);
+    }
 }
