@@ -4,130 +4,160 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
+
     <div class="flex h-screen">
 
-        <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 bg-indigo-700 text-white transition-all duration-300">
+        <!-- Sidebar Desktop -->
+        <aside id="sidebar" class="bg-indigo-700 text-white w-64 flex flex-col transition-all duration-300 hidden md:flex">
 
             <!-- Header -->
-            <div class="flex items-center justify-between p-4 bg-indigo-800">
-                <h1 id="sidebarTitle" class="text-xl font-bold whitespace-nowrap">
-                    Admin Panel
-                </h1>
-                <button id="toggleSidebar" class="text-2xl font-bold">
+            <div class="flex items-center justify-between p-4 bg-indigo-800 border-b border-indigo-600">
+                <h1 id="sidebarTitle" class="text-xl font-bold whitespace-nowrap">Admin Panel</h1>
+                <button id="toggleSidebar" class="text-2xl font-bold hover:text-gray-300 transition">
                     ☰
                 </button>
             </div>
 
             <!-- Navigation -->
-            <nav id="sidebarNav" class="mt-6 space-y-2">
+            <nav class="flex-1 mt-6 space-y-1 px-1">
 
-                <!-- Dashboard -->
-                <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-900' : '' }}">
-                    🏠
-                    <span class="menu-text">Dashboard</span>
-                </a>
+                @php
+                    $menuItems = [
+                        ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => '🏠'],
+                        ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => '🎓'],
+                        ['route' => 'admin.courses.index', 'label' => 'Courses', 'icon' => '📚'],
+                        ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => '👨‍🏫'],
+                        ['route' => 'admin.schedule.index', 'label' => 'Schedule', 'icon' => '📅'],
+                        ['route' => 'admin.reports.index', 'label' => 'Reports', 'icon' => '📊'],
+                        ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => '⚙️'],
+                    ];
+                @endphp
 
-                <!-- Students -->
-                <a href="{{ route('admin.students.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.students.*') ? 'bg-indigo-900' : '' }}">
-                    🎓
-                    <span class="menu-text">Students</span>
+                @foreach($menuItems as $item)
+                <a href="{{ route($item['route']) }}"
+                    class="flex items-center gap-3 px-4 py-2 rounded-lg 
+                    transition hover:bg-indigo-600 hover:text-white 
+                    {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
+                    <span class="text-lg">{{ $item['icon'] }}</span>
+                    <span class="menu-text">{{ $item['label'] }}</span>
                 </a>
-
-                <!-- Courses -->
-                <a href="{{ route('admin.courses.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.courses.*') ? 'bg-indigo-900' : '' }}">
-                    📚
-                    <span class="menu-text">Courses</span>
-                </a>
-
-                <!-- Teachers -->
-                <a href="{{ route('admin.teachers.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.teachers.*') ? 'bg-indigo-900' : '' }}">
-                    👨‍🏫
-                    <span class="menu-text">Teachers</span>
-                </a>
-
-                <!-- Schedule -->
-                <a href="{{ route('admin.schedule.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.schedule.*') ? 'bg-indigo-900' : '' }}">
-                    📅
-                    <span class="menu-text">Schedule</span>
-                </a>
-
-                <!-- Reports -->
-                <a href="{{ route('admin.reports.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.reports.*') ? 'bg-indigo-900' : '' }}">
-                    📊
-                    <span class="menu-text">Reports</span>
-                </a>
-
-                <!-- Settings -->
-                <a href="{{ route('admin.settings.index') }}"
-                    class="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 {{ request()->routeIs('admin.settings.*') ? 'bg-indigo-900' : '' }}">
-                    ⚙️
-                    <span class="menu-text">Settings</span>
-                </a>
+                @endforeach
 
                 <!-- Logout -->
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <button type="submit" class="flex items-center gap-3 w-full px-4 py-2 hover:bg-red-600">
+                    <button type="submit"
+                        class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg 
+                        hover:bg-red-600 hover:text-white transition">
                         🚪
                         <span class="menu-text">Logout</span>
                     </button>
                 </form>
-
             </nav>
+
+            <div class="p-4 text-xs text-gray-300 text-center border-t border-indigo-600">
+                &copy; {{ date('Y') }} School Management
+            </div>
+
         </aside>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div id="mobileSidebar" class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden md:hidden">
+            <aside class="bg-indigo-700 text-white w-64 h-full p-4 flex flex-col shadow-lg transition-transform transform -translate-x-full">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-xl font-bold">Admin Panel</h1>
+                    <button id="closeMobileSidebar" class="text-2xl font-bold hover:text-gray-300">✕</button>
+                </div>
+
+                <nav class="flex-1 space-y-1">
+                    @foreach($menuItems as $item)
+                    <a href="{{ route($item['route']) }}"
+                        class="flex items-center gap-3 px-4 py-2 rounded-lg 
+                        transition hover:bg-indigo-600 hover:text-white 
+                        {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
+                        <span class="text-lg">{{ $item['icon'] }}</span>
+                        <span>{{ $item['label'] }}</span>
+                    </a>
+                    @endforeach
+
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                            🚪 Logout
+                        </button>
+                    </form>
+                </nav>
+            </aside>
+        </div>
 
         <!-- Main Content -->
         <main class="flex-1 p-6 overflow-y-auto">
-            @yield('content')
-        </main>
+            <!-- Mobile toggle button -->
+            <button id="mobileToggle" class="md:hidden mb-4 bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700 transition">
+                ☰ Menu
+            </button>
 
+            <div class="bg-white rounded-lg shadow p-6 min-h-[80vh] transition">
+                @yield('content')
+            </div>
+        </main>
     </div>
 
+    <!-- Scripts -->
     <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggleSidebar');
-    const title = document.getElementById('sidebarTitle');
-    const menuTexts = document.querySelectorAll('.menu-text');
+        // Desktop sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const title = document.getElementById('sidebarTitle');
+        const menuTexts = document.querySelectorAll('.menu-text');
 
-    // Load state from localStorage
-    let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+        let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
 
-    function updateSidebar() {
-        if (isCollapsed) {
-            sidebar.classList.remove('w-64');
-            sidebar.classList.add('w-16');
-            title.classList.add('hidden');
-            menuTexts.forEach(el => el.classList.add('hidden'));
-        } else {
-            sidebar.classList.remove('w-16');
-            sidebar.classList.add('w-64');
-            title.classList.remove('hidden');
-            menuTexts.forEach(el => el.classList.remove('hidden'));
+        function updateSidebar() {
+            if (isCollapsed) {
+                sidebar.classList.remove('w-64');
+                sidebar.classList.add('w-20');
+                title.classList.add('hidden');
+                menuTexts.forEach(el => el.classList.add('hidden'));
+            } else {
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-64');
+                title.classList.remove('hidden');
+                menuTexts.forEach(el => el.classList.remove('hidden'));
+            }
         }
-    }
 
-    // Initial render
-    updateSidebar();
-
-    toggleBtn.addEventListener('click', () => {
-        isCollapsed = !isCollapsed;
-        localStorage.setItem('sidebar-collapsed', isCollapsed);
         updateSidebar();
-    });
+
+        toggleBtn.addEventListener('click', () => {
+            isCollapsed = !isCollapsed;
+            localStorage.setItem('sidebar-collapsed', isCollapsed);
+            updateSidebar();
+        });
+
+        // Mobile sidebar toggle
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileSidebar.classList.remove('hidden');
+            setTimeout(() => {
+                mobileSidebar.querySelector('aside').classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        closeMobileSidebar.addEventListener('click', () => {
+            mobileSidebar.querySelector('aside').classList.add('-translate-x-full');
+            setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
+        });
     </script>
-
-
 
 </body>
 
