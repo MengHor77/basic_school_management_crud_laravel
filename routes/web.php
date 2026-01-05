@@ -32,6 +32,8 @@ use App\Http\Controllers\Backend\SettingController;
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 Route::get('/about', [AboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [ContactController::class, 'index'])->name('frontend.contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('frontend.contact.submit');
+
 
 // My Course page (only for logged-in users)
 Route::get('/my-course', [MyCourseController::class, 'index'])
