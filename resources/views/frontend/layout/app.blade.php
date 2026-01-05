@@ -18,22 +18,22 @@
 
         <div class="flex flex-col items-center">
             @auth('web') {{-- Check if frontend user is logged in --}}
-                <form action="{{ route('user.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="hover:underline">Logout</button>
-                </form>
+            <form action="{{ route('user.logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="hover:underline">Logout</button>
+            </form>
 
-                <a href="#">
-                    <img src="{{ asset('storage/profile/' . Auth::guard('web')->user()->image ?? 'image.png') }}"
-                        alt="Profile"
-                        class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
-                </a>
+            <a href="#">
+                <img src="{{ asset('storage/profile/' . (Auth::guard('web')->user()->image ?? 'image.png')) }}"
+                    class="w-10 h-10 rounded-full border border-white">
+
+            </a>
             @else
-                <a href="{{ route('user.login') }}" class="hover:underline">Login</a>
-                <a href="{{ route('user.login') }}">
-                    <img src="{{ asset('storage/profile/image.png') }}" alt="Profile"
-                        class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
-                </a>
+            <a href="{{ route('user.login') }}" class="hover:underline">Login</a>
+            <a href="{{ route('user.login') }}">
+                <img src="{{ asset('storage/profile/image.png') }}" alt="Profile"
+                    class="w-10 h-10 rounded-full border border-white hover:ring-2 hover:ring-white transition mt-1">
+            </a>
             @endauth
         </div>
     </header>

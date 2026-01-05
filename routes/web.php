@@ -9,7 +9,6 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\MyCourseController;
-
 use App\Http\Controllers\Frontend\UserController as FrontUserController;
 
 // ----------------------
@@ -28,36 +27,51 @@ use App\Http\Controllers\Backend\SettingController;
 // ----------------------
 // Frontend Pages
 // ----------------------
+
+// Home, About, Contact pages
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 Route::get('/about', [AboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [ContactController::class, 'index'])->name('frontend.contact');
-Route::get('/my-course', [MyCourseController::class, 'index'])->name('frontend.myCourse');
+
+// My Course page (only for logged-in users)
+Route::get('/my-course', [MyCourseController::class, 'index'])
+    ->name('frontend.myCourse');
+
+// Enroll action (POST) (only for logged-in users)
+Route::post('/courses/{id}/enroll', [MyCourseController::class, 'enroll'])
+    ->middleware('auth')
+    ->name('courses.enroll');
 
 // ----------------------
 // Frontend User Authentication
-// ----------------------
-// Show login form
-Route::get('/user/login', [FrontUserController::class, 'showLoginForm'])->name('user.login');
-// Process login
-Route::post('/user/login', [FrontUserController::class, 'login'])->name('user.login.submit');
-// Logout
-Route::post('/user/logout', [FrontUserController::class, 'logout'])->name('user.logout');
 
-// Show register form
-Route::get('/user/register', [FrontUserController::class, 'showRegisterForm'])->name('user.register');
-// Process registration
-Route::post('/user/register', [FrontUserController::class, 'register'])->name('user.register.submit');
+// Guest routes
+Route::middleware('guest')->group(function () {
+    // Show login form
+    Route::get('/user/login', [FrontUserController::class, 'showLoginForm'])->name('user.login');
+    // Process login
+    Route::post('/user/login', [FrontUserController::class, 'login'])->name('user.login.submit');
+
+    // Show register form
+    Route::get('/user/register', [FrontUserController::class, 'showRegisterForm'])->name('user.register');
+    // Process registration
+    Route::post('/user/register', [FrontUserController::class, 'register'])->name('user.register.submit');
+});
+
+// Authenticated routes
+Route::middleware('auth')->group(function () {
+    // Logout
+    Route::post('/user/logout', [FrontUserController::class, 'logout'])->name('user.logout');
+});
 
 // ----------------------
 // Admin Authentication (Public)
-// ----------------------
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 // ----------------------
 // Admin Protected Routes (Requires auth:admin)
-// ----------------------
 Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

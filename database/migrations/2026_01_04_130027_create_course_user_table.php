@@ -11,18 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('course_user', function (Blueprint $table) {
-            $table->id();
+      Schema::create('my_courses', function (Blueprint $table) {
+        $table->id();
 
-            // relationship
-            $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+        // user
+        $table->unsignedBigInteger('user_id');
 
-            $table->timestamps();
+        // course data (copied)
+        $table->string('title');
+        $table->text('description')->nullable();
+        $table->date('start_date')->nullable();
+        $table->date('end_date')->nullable();
+        $table->integer('capacity')->nullable();
+        $table->boolean('is_active')->default(1);
 
-            // prevent duplicate enroll
-            $table->unique(['course_id', 'user_id']);
-        });
+        // enroll date
+        $table->date('enrolled_date');
+
+        $table->timestamps();
+    });
+
     }
 
     /**
@@ -30,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_user');
+        Schema::dropIfExists('my_courses');
     }
 };
