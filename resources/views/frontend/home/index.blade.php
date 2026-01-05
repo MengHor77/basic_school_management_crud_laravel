@@ -6,16 +6,16 @@
 
 {{-- Show Success Message --}}
 @if(session('success'))
-    <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
-        {{ session('success') }}
-    </div>
+<div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+    {{ session('success') }}
+</div>
 @endif
 
 {{-- Show Error Message --}}
 @if(session('error'))
-    <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-        {{ session('error') }}
-    </div>
+<div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+    {{ session('error') }}
+</div>
 @endif
 
 {{-- COURSES SECTION --}}
@@ -24,8 +24,8 @@
 @if($courses->count())
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
     @php
-        // Get array of course IDs the logged-in user has enrolled in
-        $enrolledCourseIds = auth()->check() ? auth()->user()->myCourses()->pluck('course_id')->toArray() : [];
+    // Get array of course IDs the logged-in user has enrolled in
+    $enrolledCourseIds = auth()->check() ? auth()->user()->myCourses()->pluck('course_id')->toArray() : [];
     @endphp
 
     @foreach($courses as $course)
@@ -42,22 +42,29 @@
         </p>
 
         @auth
-            @if(in_array($course->id, $enrolledCourseIds))
-                <button class="w-max bg-gray-400 mt-5 px-3 py-2 rounded-md text-white cursor-not-allowed" disabled>
-                    Already Enrolled
-                </button>
-            @else
-                <form action="{{ route('courses.enroll', $course->id) }}" method="POST">
-                    @csrf
-                    <button class="w-max bg-indigo-600 mt-5 px-3 py-2 rounded-md text-white">
-                        Enroll
-                    </button>
-                </form>
-            @endif
+        @if(in_array($course->id, $enrolledCourseIds))
+        <button class="w-max bg-gray-400 mt-5 px-3 py-2 rounded-md text-white cursor-not-allowed" disabled>
+            Already Enrolled
+        </button>
         @else
-            <a href="{{ route('user.login') }}" class="inline-block mt-5 bg-gray-400 px-3 py-2 rounded-md text-white">
-                Login to Enroll
-            </a>
+        <form action="{{ route('courses.enroll', $course->id) }}" method="POST">
+            @csrf
+            <button class="mt-5 inline-flex items-center justify-center
+           px-5 py-2.5
+           bg-indigo-600 text-white text-sm font-semibold
+           rounded-lg shadow-md
+           hover:bg-indigo-700
+           focus:outline-none focus:ring-2 focus:ring-indigo-400
+           transition">
+                Enroll
+            </button>
+
+        </form>
+        @endif
+        @else
+        <a href="{{ route('user.login') }}" class="inline-block mt-5 bg-gray-400 px-3 py-2 rounded-md text-white">
+            Login to Enroll
+        </a>
         @endauth
 
     </div>
