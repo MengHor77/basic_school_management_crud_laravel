@@ -6,6 +6,7 @@
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -27,23 +28,24 @@
             <nav class="flex-1 mt-6 space-y-1 px-1">
 
                 @php
-                    $menuItems = [
-                        ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => '🏠'],
-                        ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => '🎓'],
-                        ['route' => 'admin.courses.index', 'label' => 'Courses', 'icon' => '📚'],
-                        ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => '👨‍🏫'],
-                        ['route' => 'admin.schedule.index', 'label' => 'Schedule', 'icon' => '📅'],
-                        ['route' => 'admin.reports.index', 'label' => 'Reports', 'icon' => '📊'],
-                        ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => '⚙️'],
-                    ];
+                $menuItems = [
+                ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => 'fa-solid fa-gauge'],
+                ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => 'fa-solid fa-user-graduate'],
+                ['route' => 'admin.courses.index', 'label' => 'Courses', 'icon' => 'fa-solid fa-book-open'],
+                ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => 'fa-solid fa-chalkboard-user'],
+                ['route' => 'admin.schedule.index', 'label' => 'Schedule', 'icon' => 'fa-solid fa-calendar-days'],
+                ['route' => 'admin.reports.index', 'label' => 'Reports', 'icon' => 'fa-solid fa-chart-line'],
+                ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => 'fa-solid fa-gear'],
+                ];
                 @endphp
+
 
                 @foreach($menuItems as $item)
                 <a href="{{ route($item['route']) }}"
                     class="flex items-center gap-3 px-4 py-2 rounded-lg 
                     transition hover:bg-indigo-600 hover:text-white 
                     {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
-                    <span class="text-lg">{{ $item['icon'] }}</span>
+                    <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
                     <span class="menu-text">{{ $item['label'] }}</span>
                 </a>
                 @endforeach
@@ -51,10 +53,9 @@
                 <!-- Logout -->
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <button type="submit"
-                        class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg 
+                    <button type="submit" class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg 
                         hover:bg-red-600 hover:text-white transition">
-                        🚪
+                        <i class="fa-solid fa-right-from-bracket text-lg w-5 text-center"></i>
                         <span class="menu-text">Logout</span>
                     </button>
                 </form>
@@ -68,7 +69,8 @@
 
         <!-- Mobile Sidebar Overlay -->
         <div id="mobileSidebar" class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden md:hidden">
-            <aside class="bg-indigo-700 text-white w-64 h-full p-4 flex flex-col shadow-lg transition-transform transform -translate-x-full">
+            <aside
+                class="bg-indigo-700 text-white w-64 h-full p-4 flex flex-col shadow-lg transition-transform transform -translate-x-full">
                 <div class="flex items-center justify-between mb-6">
                     <h1 class="text-xl font-bold">Admin Panel</h1>
                     <button id="closeMobileSidebar" class="text-2xl font-bold hover:text-gray-300">✕</button>
@@ -99,7 +101,8 @@
         <!-- Main Content -->
         <main class="flex-1 p-6 overflow-y-auto">
             <!-- Mobile toggle button -->
-            <button id="mobileToggle" class="md:hidden mb-4 bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700 transition">
+            <button id="mobileToggle"
+                class="md:hidden mb-4 bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700 transition">
                 ☰ Menu
             </button>
 
@@ -111,52 +114,52 @@
 
     <!-- Scripts -->
     <script>
-        // Desktop sidebar toggle
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggleSidebar');
-        const title = document.getElementById('sidebarTitle');
-        const menuTexts = document.querySelectorAll('.menu-text');
+    // Desktop sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const title = document.getElementById('sidebarTitle');
+    const menuTexts = document.querySelectorAll('.menu-text');
 
-        let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+    let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
 
-        function updateSidebar() {
-            if (isCollapsed) {
-                sidebar.classList.remove('w-64');
-                sidebar.classList.add('w-20');
-                title.classList.add('hidden');
-                menuTexts.forEach(el => el.classList.add('hidden'));
-            } else {
-                sidebar.classList.remove('w-20');
-                sidebar.classList.add('w-64');
-                title.classList.remove('hidden');
-                menuTexts.forEach(el => el.classList.remove('hidden'));
-            }
+    function updateSidebar() {
+        if (isCollapsed) {
+            sidebar.classList.remove('w-64');
+            sidebar.classList.add('w-20');
+            title.classList.add('hidden');
+            menuTexts.forEach(el => el.classList.add('hidden'));
+        } else {
+            sidebar.classList.remove('w-20');
+            sidebar.classList.add('w-64');
+            title.classList.remove('hidden');
+            menuTexts.forEach(el => el.classList.remove('hidden'));
         }
+    }
 
+    updateSidebar();
+
+    toggleBtn.addEventListener('click', () => {
+        isCollapsed = !isCollapsed;
+        localStorage.setItem('sidebar-collapsed', isCollapsed);
         updateSidebar();
+    });
 
-        toggleBtn.addEventListener('click', () => {
-            isCollapsed = !isCollapsed;
-            localStorage.setItem('sidebar-collapsed', isCollapsed);
-            updateSidebar();
-        });
+    // Mobile sidebar toggle
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const closeMobileSidebar = document.getElementById('closeMobileSidebar');
 
-        // Mobile sidebar toggle
-        const mobileSidebar = document.getElementById('mobileSidebar');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+    mobileToggle.addEventListener('click', () => {
+        mobileSidebar.classList.remove('hidden');
+        setTimeout(() => {
+            mobileSidebar.querySelector('aside').classList.remove('-translate-x-full');
+        }, 50);
+    });
 
-        mobileToggle.addEventListener('click', () => {
-            mobileSidebar.classList.remove('hidden');
-            setTimeout(() => {
-                mobileSidebar.querySelector('aside').classList.remove('-translate-x-full');
-            }, 50);
-        });
-
-        closeMobileSidebar.addEventListener('click', () => {
-            mobileSidebar.querySelector('aside').classList.add('-translate-x-full');
-            setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
-        });
+    closeMobileSidebar.addEventListener('click', () => {
+        mobileSidebar.querySelector('aside').classList.add('-translate-x-full');
+        setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
+    });
     </script>
 
 </body>
