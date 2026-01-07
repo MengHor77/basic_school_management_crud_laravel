@@ -44,27 +44,27 @@
             </div>
 
             {{-- ACTION --}}
-            <div class="mt-6 space-y-3">
+            <div class="mt-6 flex gap-3">
 
                 {{-- View Course --}}
-                <a href="{{ route('frontend.myCourse.showCourse', $myCourse->course->id) }}" class="w-full inline-flex items-center justify-center gap-2
-       py-2.5 rounded-lg
-       bg-indigo-600 text-white text-sm font-semibold
-       hover:bg-indigo-700
-       focus:outline-none focus:ring-2 focus:ring-indigo-400
-       transition">
+                <a href="{{ route('frontend.myCourse.showCourse', $myCourse->course->id) }}" class="flex-1 inline-flex items-center justify-center gap-2
+                    py-2.5 rounded-lg
+                    bg-indigo-600 text-white text-sm font-semibold
+                    hover:bg-indigo-700
+                    focus:outline-none focus:ring-2 focus:ring-indigo-400
+                    transition">
                     View Course
                 </a>
 
                 {{-- Remove Course --}}
-                <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST">
+                <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST" class="flex-1">
                     @csrf
-                    <button class="w-full inline-flex items-center justify-center gap-2
-            py-2.5 rounded-lg
-            bg-red-600 text-white text-sm font-semibold
-            hover:bg-red-700
-            focus:outline-none focus:ring-2 focus:ring-red-400
-            transition">
+                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2
+                        py-2.5 rounded-lg
+                        bg-red-600 text-white text-sm font-semibold
+                        hover:bg-red-700
+                        focus:outline-none focus:ring-2 focus:ring-red-400
+                        transition">
                         Remove Course
                     </button>
                 </form>
