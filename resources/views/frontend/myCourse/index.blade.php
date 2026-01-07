@@ -5,9 +5,9 @@
 @section('content')
 
 {{-- ================= PAGE HEADER ================= --}}
-<div class="flex items-center justify-between mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">My Courses</h2>
-</div>
+    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-indigo-600 mb-6">
+        <h2 class="">My course</h2>
+    </div>
 
 {{-- ================= FLASH MESSAGES ================= --}}
 @if(session('success'))

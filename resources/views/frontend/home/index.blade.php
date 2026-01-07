@@ -21,7 +21,7 @@
 
 {{-- ================= COURSES ================= --}}
 <section class="mb-14">
-    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-gray-800 mb-6">
+    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-indigo-600 mb-6">
         <h2 class="">Course</h2>
     </div>
 
@@ -91,7 +91,7 @@
 
 {{-- ================= TEACHERS ================= --}}
 <section>
-    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-gray-800 mb-6">
+    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-indigo-600 mb-6">
         <h2 class="">Teachers</h2>
     </div>
     @if($teachers->count())
