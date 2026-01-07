@@ -10,6 +10,13 @@ use Carbon\Carbon;
 
 class MyCourseController extends Controller
 {
+public function showCourse($id)
+{
+    $course = Course::findOrFail($id); // fetch course info
+    return view('frontend.myCourse.showCourse', compact('course'));
+}
+
+
     public function index()
     {
         $myCourses = auth()->check()

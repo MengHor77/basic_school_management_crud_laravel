@@ -35,19 +35,26 @@ Route::get('/contact', [ContactController::class, 'index'])->name('frontend.cont
 Route::post('/contact', [ContactController::class, 'submit'])->name('frontend.contact.submit');
 
 
-// My Course page (only for logged-in users)
-Route::get('/my-course', [MyCourseController::class, 'index'])
-    ->name('frontend.myCourse');
 
-// Enroll action (POST) (only for logged-in users)
-Route::post('/courses/{id}/enroll', [MyCourseController::class, 'enroll'])
-    ->middleware('auth')
-    ->name('courses.enroll');
+// Group all MyCourse routes with auth middleware
+Route::middleware('auth')->group(function () {
+
+    // My Course page (list of enrolled courses)
+    Route::get('/my-course', [MyCourseController::class, 'index'])
+        ->name('frontend.myCourse');
+
+    // Enroll action
+    Route::post('/courses/{id}/enroll', [MyCourseController::class, 'enroll'])
+        ->name('courses.enroll');
 
     // Remove a course from My Courses
-Route::post('/my-course/{id}/remove', [MyCourseController::class, 'remove'])
-    ->middleware('auth')
-    ->name('myCourse.remove');
+    Route::post('/my-course/{id}/remove', [MyCourseController::class, 'remove'])
+        ->name('myCourse.remove');
+
+    // View single course details
+    Route::get('/my-course/{id}', [MyCourseController::class, 'showCourse'])
+        ->name('frontend.myCourse.showCourse');
+});
 
 // ----------------------
 // Frontend User Authentication
