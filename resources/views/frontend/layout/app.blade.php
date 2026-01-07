@@ -46,7 +46,7 @@
     </header>
 
     <!-- ================= NAVIGATION ================= -->
-    <nav class="bg-indigo-600 shadow-lg shadow-indigo-500/50 py-5">
+    <nav class="bg-indigo-600 py-5">
         <div class="container mx-auto px-6">
             <ul class="flex gap-2 py-3 text-sm font-medium text-white">
 
