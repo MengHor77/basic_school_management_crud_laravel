@@ -11,7 +11,7 @@
 <body class="bg-gray-100 text-gray-800 antialiased">
 
     <!-- ================= HEADER ================= -->
-    <header class="bg-indigo-300 shadow-sm border-b">
+    <header class="bg-indigo-300 p-1">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
             <!-- Logo / Title -->
@@ -46,13 +46,13 @@
     </header>
 
     <!-- ================= NAVIGATION ================= -->
-    <nav class="bg-indigo-600 py-2">
+    <nav class="bg-indigo-600 shadow-lg shadow-indigo-500/50 py-5">
         <div class="container mx-auto px-6">
             <ul class="flex gap-2 py-3 text-sm font-medium text-white">
 
                 @php
-                $activeClass = 'bg-white text-indigo-600 shadow-sm rounded-lg px-4 py-2 transition';
-                $normalClass = 'px-4 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition';
+                $activeClass = 'bg-indigo-300 text-indigo-600  hover:shadow-xl rounded-full px-4 py-2 transition';
+                $normalClass = 'px-4 py-2 rounded-full hover:bg-indigo-500 hover:shadow-xl hover:text-white transition';
                 @endphp
 
                 <li>
