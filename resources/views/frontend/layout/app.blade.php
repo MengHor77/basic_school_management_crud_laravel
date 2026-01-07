@@ -6,6 +6,7 @@
     <title>@yield('title', 'Frontend')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800 antialiased">
@@ -51,14 +52,15 @@
             <ul class="flex gap-2 py-3 text-sm font-medium text-white">
 
                 @php
-                $activeClass = 'bg-indigo-300 text-indigo-600  hover:shadow-xl rounded-full px-4 py-2 transition';
+                $activeClass = 'bg-indigo-300 text-indigo-600 hover:shadow-xl rounded-full px-4 py-2 transition';
                 $normalClass = 'px-4 py-2 rounded-full hover:bg-indigo-500 hover:shadow-xl hover:text-white transition';
                 @endphp
 
                 <li>
                     <a href="{{ route('frontend.home') }}"
-                        class="{{ request()->routeIs('frontend.home') ? $activeClass : $normalClass }}">
-                        Home
+                        class="{{ request()->routeIs('frontend.home') ? $activeClass : $normalClass }}"
+                        aria-label="Home">
+                        <i class="fa fa-home text-base"></i>
                     </a>
                 </li>
 
@@ -102,15 +104,33 @@
                 <p class="text-gray-700 text-sm">Empowering education with modern technology</p>
             </div>
 
-            <div class="flex gap-6 text-sm">
-                <a href="{{ route('frontend.home') }}"
-                    class="hover:text-gray-900 transition-colors font-medium">Home</a>
-                <a href="{{ route('frontend.myCourse') }}" class="hover:text-gray-900 transition-colors font-medium">My
-                    Courses</a>
-                <a href="{{ route('frontend.about') }}" class="hover:text-gray-900 transition-colors font-medium">About
-                    Us</a>
-                <a href="{{ route('frontend.contact') }}"
-                    class="hover:text-gray-900 transition-colors font-medium">Contact</a>
+            <div class="flex gap-6 text-sm font-medium">
+
+                <a href="{{ route('frontend.home') }}" class="{{ request()->routeIs('frontend.home') 
+        ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1 flex items-center gap-1' 
+        : 'text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1' }}" aria-label="Home">
+                    <i class="fa fa-home"></i>
+                </a>
+
+
+                <a href="{{ route('frontend.myCourse') }}" class="{{ request()->routeIs('frontend.myCourse') 
+            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
+            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
+                    My Courses
+                </a>
+
+                <a href="{{ route('frontend.about') }}" class="{{ request()->routeIs('frontend.about') 
+            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
+            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
+                    About Us
+                </a>
+
+                <a href="{{ route('frontend.contact') }}" class="{{ request()->routeIs('frontend.contact') 
+            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
+            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
+                    Contact
+                </a>
+
             </div>
 
             <div class="flex gap-4">
