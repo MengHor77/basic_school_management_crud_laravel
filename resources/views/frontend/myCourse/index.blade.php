@@ -4,10 +4,21 @@
 
 @section('content')
 
+{{-- ================= GUEST NOTICE ================= --}}
+@guest
+<div class="mb-6 p-4 rounded-lg bg-yellow-50 text-yellow-700 border border-yellow-200">
+    Please
+    <a href="{{ route('user.login') }}" class="font-semibold underline">
+        login
+    </a>
+    to view your enrolled courses.
+</div>
+@endguest
+
 {{-- ================= PAGE HEADER ================= --}}
-    <div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl  text-3xl font-bold text-indigo-600 mb-6">
-        <h2 class="">My course</h2>
-    </div>
+<div class="w-full bg-gray-200 rounded-lg py-3 px-3 shadow-xl text-3xl font-bold text-indigo-600 mb-6">
+    <h2>My Course</h2>
+</div>
 
 {{-- ================= FLASH MESSAGES ================= --}}
 @if(session('success'))
@@ -43,45 +54,49 @@
                 📅 {{ $myCourse->course->start_date }} → {{ $myCourse->course->end_date }}
             </div>
 
-            {{-- ACTION --}}
+            {{-- ================= ACTIONS (AUTH ONLY) ================= --}}
+            @auth
             <div class="mt-6 flex gap-3">
 
                 {{-- View Course --}}
-                <a href="{{ route('frontend.myCourse.showCourse', $myCourse->course->id) }}" class="flex-1 inline-flex items-center justify-center gap-2
-                    py-2.5 rounded-lg
-                    bg-indigo-600 text-white text-sm font-semibold
-                    hover:bg-indigo-700
-                    focus:outline-none focus:ring-2 focus:ring-indigo-400
-                    transition">
+                <a href="{{ route('frontend.myCourse.showCourse', $myCourse->course->id) }}"
+                   class="flex-1 inline-flex items-center justify-center gap-2
+                          py-2.5 rounded-lg
+                          bg-indigo-600 text-white text-sm font-semibold
+                          hover:bg-indigo-700
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400
+                          transition">
                     View Course
                 </a>
 
                 {{-- Remove Course --}}
                 <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST" class="flex-1">
                     @csrf
-                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2
-                        py-2.5 rounded-lg
-                        bg-red-600 text-white text-sm font-semibold
-                        hover:bg-red-700
-                        focus:outline-none focus:ring-2 focus:ring-red-400
-                        transition">
+                    <button type="submit"
+                            class="w-full inline-flex items-center justify-center gap-2
+                                   py-2.5 rounded-lg
+                                   bg-red-600 text-white text-sm font-semibold
+                                   hover:bg-red-700
+                                   focus:outline-none focus:ring-2 focus:ring-red-400
+                                   transition">
                         Remove Course
                     </button>
                 </form>
 
             </div>
+            @endauth
 
         </div>
-
     </div>
     @endforeach
 </div>
 @else
 <div class="bg-white rounded-xl shadow-sm border p-8 text-center text-gray-600">
     <p class="text-lg font-medium">You have not enrolled in any courses yet.</p>
-    <a href="{{ route('frontend.home') }}" class="inline-block mt-4 px-6 py-2.5 rounded-lg
-       bg-indigo-600 text-white text-sm font-semibold
-       hover:bg-indigo-700 transition">
+    <a href="{{ route('frontend.home') }}"
+       class="inline-block mt-4 px-6 py-2.5 rounded-lg
+              bg-indigo-600 text-white text-sm font-semibold
+              hover:bg-indigo-700 transition">
         Browse Courses
     </a>
 </div>

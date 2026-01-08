@@ -17,16 +17,19 @@ public function showCourse($id)
 }
 
 
-    public function index()
-    {
-        $myCourses = auth()->check()
-            ? MyCourse::with('course')
-                ->where('user_id', Auth::id())
-                ->get()
-            : collect();
-
-        return view('frontend.myCourse.index', compact('myCourses'));
+  public function index()
+{
+    if (Auth::check()) {
+        $myCourses = MyCourse::with('course')
+            ->where('user_id', Auth::id())
+            ->get();
+    } else {
+        $myCourses = collect(); // empty collection for guests
     }
+
+    return view('frontend.myCourse.index', compact('myCourses'));
+}
+
 
     public function enroll($courseId)
     {

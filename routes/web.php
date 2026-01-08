@@ -35,13 +35,12 @@ Route::get('/contact', [ContactController::class, 'index'])->name('frontend.cont
 Route::post('/contact', [ContactController::class, 'submit'])->name('frontend.contact.submit');
 
 
+// PUBLIC: My Course page (view only)
+Route::get('/my-course', [MyCourseController::class, 'index'])
+    ->name('frontend.myCourse');
 
 // Group all MyCourse routes with auth middleware
 Route::middleware('auth')->group(function () {
-
-    // My Course page (list of enrolled courses)
-    Route::get('/my-course', [MyCourseController::class, 'index'])
-        ->name('frontend.myCourse');
 
     // Enroll action
     Route::post('/courses/{id}/enroll', [MyCourseController::class, 'enroll'])
