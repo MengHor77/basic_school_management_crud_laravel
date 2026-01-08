@@ -22,4 +22,17 @@ class Course extends Model
     {
         return $this->hasMany(MyCourse::class);
     }
+
+    public function teacher()
+   {  
+      return $this->belongsTo(Teacher::class);
+    }
+    public function students()
+    {
+    return $this->belongsToMany(Student::class, 'my_courses', 'course_id', 'user_id')
+                ->withPivot('enrolled_date')
+                ->withTimestamps();
+    }
+
+
 }

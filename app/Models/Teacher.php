@@ -17,5 +17,11 @@ class Teacher extends Model
         'address',
         'is_active',
     ];
+    
+    public function courses()
+{
+    return $this->hasMany(Course::class);
+}
+
 }
 
