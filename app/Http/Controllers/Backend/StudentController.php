@@ -4,67 +4,114 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Student;
+use App\Models\User; // users table
+use App\Models\Course;
+use App\Models\MyCourse;
 
 class StudentController extends Controller
 {
-    // Show list (exclude deleted students)
-    public function index()
-    {
-        $students = Student::where('is_delete', 0)->get();
-        return view('backend.students.index', compact('students'));
-    }
+    // Show all students
+   public function index()
+{
+    // Fetch all users (students) with their enrolled courses
+    $students = User::with('myCourses.course')->paginate(10);
+    return view('backend.students.index', compact('students'));
+}
+
 
     // Show create form
     public function create()
     {
-        return view('backend.students.create');
+        $courses = Course::all();
+        return view('backend.students.create', compact('courses'));
     }
 
     // Store new student
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'gender' => 'required|in:male,female,other',
-            'age' => 'required|integer|min:1',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'courses' => 'nullable|array|exists:courses,id',
         ]);
 
-        Student::create($validated);
+        // Create user (student)
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
 
-        return redirect()->route('admin.students.index')->with('success', 'Student added successfully.');
-    }
+        // Assign courses
+        if ($request->has('courses')) {
+            foreach ($request->courses as $courseId) {
+                MyCourse::create([
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'enrolled_date' => now(),
+                ]);
+            }
+        }
 
-    // Show a single student (optional)
-    public function show(Student $student)
-    {
-        return view('backend.students.show', compact('student'));
+        return redirect()->route('admin.students.index')->with('success', 'Student created successfully.');
     }
 
     // Show edit form
-    public function edit(Student $student)
+    public function edit($id)
     {
-        return view('backend.students.edit', compact('student'));
+        $user = User::findOrFail($id);
+        $courses = Course::all();
+        $assignedCourses = $user->myCourses->pluck('course_id')->toArray();
+        return view('backend.students.edit', compact('user', 'courses', 'assignedCourses'));
     }
 
     // Update student
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $user = User::findOrFail($id);
+
+        $request->validate([
             'name' => 'required|string|max:255',
-            'gender' => 'required|in:male,female,other',
-            'age' => 'required|integer|min:1',
+            'email' => "required|email|unique:users,email,$id",
+            'password' => 'nullable|min:6|confirmed',
+            'courses' => 'nullable|array|exists:courses,id',
         ]);
 
-        $student->update($validated);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        // Update courses
+        $user->myCourses()->delete(); // remove old
+        if ($request->has('courses')) {
+            foreach ($request->courses as $courseId) {
+                MyCourse::create([
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'enrolled_date' => now(),
+                ]);
+            }
+        }
 
         return redirect()->route('admin.students.index')->with('success', 'Student updated successfully.');
     }
 
-    // Soft-delete student by setting is_delete = 1
-    public function destroy(Student $student)
+    // Show student details
+    public function show($id)
     {
-        $student->update(['is_delete' => 1]);
-        return redirect()->route('admin.students.index')->with('success', 'Student deleted.');
+        $user = User::with('myCourses.course')->findOrFail($id);
+        return view('backend.students.show', compact('user'));
+    }
+
+    // Delete student
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully.');
     }
 }

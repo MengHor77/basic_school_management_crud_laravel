@@ -18,32 +18,37 @@
     <form method="POST" action="{{ route('admin.students.store') }}">
         @csrf
         <div class="mb-4">
-            <label class="block text-gray-700">Name</label>
-            <input type="text" name="name" value="{{ old('name') }}" required
-                class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <label>Name</label>
+            <input type="text" name="name" value="{{ old('name') }}" required class="w-full border px-3 py-2 rounded">
         </div>
 
         <div class="mb-4">
-            <label class="block text-gray-700">Gender</label>
-            <select name="gender" required
-                class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <option value="">-- Select Gender --</option>
-                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+            <label>Email</label>
+            <input type="email" name="email" value="{{ old('email') }}" required class="w-full border px-3 py-2 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label>Password</label>
+            <input type="password" name="password" required class="w-full border px-3 py-2 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label>Confirm Password</label>
+            <input type="password" name="password_confirmation" required class="w-full border px-3 py-2 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label>Assign Courses</label>
+            <select name="courses[]" multiple class="w-full border px-3 py-2 rounded">
+                @foreach($courses as $course)
+                <option value="{{ $course->id }}">{{ $course->title }}</option>
+                @endforeach
             </select>
         </div>
 
-        <div class="mb-6">
-            <label class="block text-gray-700">Age</label>
-            <input type="number" name="age" value="{{ old('age') }}" required
-                class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-
         <div class="flex justify-between">
-            <a href="{{ route('admin.students.index') }}"
-                class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400">Back</a>
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save</button>
+            <a href="{{ route('admin.students.index') }}" class="bg-gray-300 px-4 py-2 rounded">Back</a>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
         </div>
     </form>
 </div>

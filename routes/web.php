@@ -99,8 +99,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
         'reports'   => ReportController::class,
         'schedule'  => ScheduleController::class,
     ]);
-    
-     // Reports routes (only index & show)
-    Route::resource('reports', ReportController::class)
-        ->only(['index', 'show']); // Prevent create/edit/delete for reports
+
+        Route::resource('reports', ReportController::class)->only(['index','show']);
+
 });
