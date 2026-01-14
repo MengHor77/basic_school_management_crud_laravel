@@ -118,7 +118,42 @@
                         class="absolute left-0 right-0 mt-1 bg-white shadow-lg rounded-md max-h-60 overflow-y-auto hidden z-50 w-96">
                     </div>
                 </div>
-                <div class="font-semibold ml-3 text-white">Profile</div>
+                <div class="relative ml-3">
+                    <button id="profileBtn"
+                        class="flex items-center gap-2 font-semibold text-white hover:text-gray-200 focus:outline-none">
+                        <i class="fa-solid fa-user-circle text-xl"></i>
+                        Profile
+                        <i class="fa-solid fa-chevron-down text-sm"></i>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div id="profileDropdown"
+                        class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg hidden z-50">
+
+                        <a href="{{ route('admin.settings.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-100">
+                            ✏️ Update Profile
+                        </a>
+
+                        <form method="POST" action="{{ route('admin.settings.destroy', auth('admin')->id()) }}"
+                            onsubmit="return confirm('Are you sure you want to delete your account?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100">
+                                🗑️ Delete Account
+                            </button>
+                        </form>
+
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                🚪 Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <!-- Content Area -->
@@ -238,6 +273,19 @@
         if (!menuSearchInput.contains(e.target) && !menuDropdown.contains(e.target)) {
             menuDropdown.classList.add('hidden');
         }
+    });
+        // ================= profile =================
+
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    profileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+        profileDropdown.classList.add('hidden');
     });
     </script>
 
