@@ -27,18 +27,19 @@
 
                 @php
                 $menuItems = [
-                    ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => 'fa-solid fa-gauge'],
-                    ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => 'fa-solid fa-user-graduate'],
-                    ['route' => 'admin.courses.index', 'label' => 'Courses', 'icon' => 'fa-solid fa-book-open'],
-                    ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => 'fa-solid fa-chalkboard-user'],
-                    ['route' => 'admin.schedule.index', 'label' => 'Schedule', 'icon' => 'fa-solid fa-calendar-days'],
-                    ['route' => 'admin.reports.index', 'label' => 'Reports', 'icon' => 'fa-solid fa-chart-line'],
-                    ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => 'fa-solid fa-gear'],
+                ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => 'fa-solid fa-gauge'],
+                ['route' => 'admin.students.index', 'label' => 'Students', 'icon' => 'fa-solid fa-user-graduate'],
+                ['route' => 'admin.courses.index', 'label' => 'Courses', 'icon' => 'fa-solid fa-book-open'],
+                ['route' => 'admin.teachers.index', 'label' => 'Teachers', 'icon' => 'fa-solid fa-chalkboard-user'],
+                ['route' => 'admin.schedule.index', 'label' => 'Schedule', 'icon' => 'fa-solid fa-calendar-days'],
+                ['route' => 'admin.reports.index', 'label' => 'Reports', 'icon' => 'fa-solid fa-chart-line'],
+                ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => 'fa-solid fa-gear'],
                 ];
                 @endphp
 
                 @foreach($menuItems as $item)
-                <a href="{{ route($item['route']) }}" class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
+                <a href="{{ route($item['route']) }}"
+                    class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
                 {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
                     <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
                     <span class="menu-text">{{ $item['label'] }}</span>
@@ -48,7 +49,8 @@
                 <!-- Logout -->
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <button type="submit" class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                    <button type="submit"
+                        class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg hover:bg-red-600 hover:text-white transition">
                         <i class="fa-solid fa-right-from-bracket text-lg w-5 text-center"></i>
                         <span class="menu-text">Logout</span>
                     </button>
@@ -62,7 +64,8 @@
 
         <!-- ================= MOBILE SIDEBAR ================= -->
         <div id="mobileSidebar" class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden md:hidden">
-            <aside class="bg-indigo-700 text-white w-64 h-full p-4 flex flex-col transform -translate-x-full transition-transform">
+            <aside
+                class="bg-indigo-700 text-white w-64 h-full p-4 flex flex-col transform -translate-x-full transition-transform">
 
                 <div class="flex justify-between mb-6">
                     <h1 class="text-xl font-bold">Admin Panel</h1>
@@ -71,7 +74,8 @@
 
                 <nav class="flex-1 space-y-1 overflow-y-auto">
                     @foreach($menuItems as $item)
-                    <a href="{{ route($item['route']) }}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-indigo-600 transition">
+                    <a href="{{ route($item['route']) }}"
+                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-indigo-600 transition">
                         <i class="{{ $item['icon'] }}"></i>
                         <span>{{ $item['label'] }}</span>
                     </a>
@@ -79,7 +83,8 @@
 
                     <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
-                        <button type="submit" class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                        <button type="submit"
+                            class="flex items-center gap-3 w-full px-4 py-2 mt-2 rounded-lg hover:bg-red-600 hover:text-white transition">
                             🚪 Logout
                         </button>
                     </form>
@@ -91,20 +96,23 @@
         <main class="flex-1 flex flex-col overflow-hidden">
 
             <!-- Top Bar with Dropdown Search -->
-            <div class="bg-yellow-400 p-4 flex justify-between items-center relative">
+            <div class="bg-indigo-600 p-4 flex justify-between items-center relative">
                 <div class="flex-1 relative">
-                    <input type="text" id="menuSearch" placeholder="Search menu..." 
-                        class="w-full px-3 py-1.5 rounded-md text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    
+                    <input type="text" id="menuSearch" placeholder="Search menu..."
+                        class="w-96 px-3 py-1.5 rounded-md text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
                     <!-- Dropdown -->
-                    <div id="menuDropdown" class="absolute left-0 right-0 mt-1 bg-white shadow-lg rounded-md max-h-60 overflow-y-auto hidden z-50"></div>
+                    <div id="menuDropdown"
+                        class="absolute left-0 right-0 mt-1 bg-white shadow-lg rounded-md max-h-60 overflow-y-auto hidden z-50 w-96">
+                    </div>
                 </div>
-                <div class="font-semibold ml-3">Profile</div>
+                <div class="font-semibold ml-3 text-white">Profile</div>
             </div>
 
             <!-- Content Area -->
             <div class="flex-1 overflow-y-auto p-4">
-                <button id="mobileToggle" class="md:hidden mb-4 bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700 transition">
+                <button id="mobileToggle"
+                    class="md:hidden mb-4 bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700 transition">
                     ☰ Menu
                 </button>
 
@@ -222,4 +230,5 @@
     </script>
 
 </body>
+
 </html>
