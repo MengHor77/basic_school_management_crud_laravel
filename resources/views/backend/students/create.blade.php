@@ -6,14 +6,14 @@
 
     {{-- Display Validation Errors --}}
     @if ($errors->any())
-    <div class="mb-6 bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded">
-        <strong class="font-semibold">Oops!</strong> Please fix the following errors:
-        <ul class="mt-2 list-disc list-inside space-y-1">
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+        <div class="mb-6 bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded">
+            <strong class="font-semibold">Oops!</strong> Please fix the following errors:
+            <ul class="mt-2 list-disc list-inside space-y-1">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form method="POST" action="{{ route('admin.students.store') }}" novalidate>
@@ -26,7 +26,7 @@
                 class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 placeholder="Enter student full name">
             @error('name')
-            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
 
@@ -37,7 +37,7 @@
                 class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 placeholder="Enter email">
             @error('email')
-            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
 
@@ -47,12 +47,13 @@
             <input type="password" id="password" name="password" required
                 class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm pr-10 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 placeholder="Enter password">
-            <button type="button" onclick="togglePassword('password')"
-                class="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500 focus:outline-none">
-                <i class="fa-solid fa-eye"></i>
+            <button type="button"
+                onclick="togglePassword('password','eye1')"
+                class="absolute right-3 top-9 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-eye" id="eye1"></i>
             </button>
             @error('password')
-            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
 
@@ -62,9 +63,10 @@
             <input type="password" id="password_confirmation" name="password_confirmation" required
                 class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm pr-10 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 placeholder="Re-enter password">
-            <button type="button" onclick="togglePassword('password_confirmation')"
-                class="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500 focus:outline-none">
-                <i class="fa-solid fa-eye"></i>
+            <button type="button"
+                onclick="togglePassword('password_confirmation','eye2')"
+                class="absolute right-3 top-9 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-eye" id="eye2"></i>
             </button>
         </div>
 
@@ -74,30 +76,41 @@
             <select name="courses[]" id="courses" multiple
                 class="w-full border border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 @foreach($courses as $course)
-                <option value="{{ $course->id }}">{{ $course->title }}</option>
+                    <option value="{{ $course->id }}">{{ $course->title }}</option>
                 @endforeach
             </select>
-            @error('courses')
-            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-            <p class="text-gray-500 text-sm mt-1">Hold <kbd>Ctrl</kbd> (Windows) or <kbd>Cmd</kbd> (Mac) to select multiple courses.</p>
+            <p class="text-gray-500 text-sm mt-1">
+                Hold <kbd>Ctrl</kbd> (Windows) or <kbd>Cmd</kbd> (Mac) to select multiple courses.
+            </p>
         </div>
 
         {{-- Buttons --}}
         <div class="flex justify-between">
             <a href="{{ route('admin.students.index') }}"
-                class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg shadow">Back</a>
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg shadow">
+                Back
+            </a>
             <button type="submit"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg shadow">Save Student</button>
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg shadow">
+                Save Student
+            </button>
         </div>
     </form>
 </div>
 
 {{-- Password Toggle Script --}}
 <script>
-function togglePassword(id) {
-    const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
+function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
 }
 </script>
 @endsection

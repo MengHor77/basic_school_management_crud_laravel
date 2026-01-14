@@ -17,11 +17,11 @@
         <!-- Total Users Card -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-5 flex flex-col justify-between hover:scale-105 transform transition duration-300">
             <div>
-                <h3 class="text-lg font-medium opacity-80">Total Users</h3>
+                <h3 class="text-lg font-medium opacity-80">Total  student</h3>
                 <p class="text-3xl font-bold mt-2">{{ \App\Models\User::where('is_delete', 0)->count() }}</p>
             </div>
             <div class="mt-4 text-sm opacity-80 flex items-center gap-1">
-                👤 All Frontend Users
+                👤 All Frontend Users (student)
             </div>
         </div>
 
