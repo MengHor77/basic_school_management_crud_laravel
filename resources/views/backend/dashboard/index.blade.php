@@ -53,8 +53,8 @@
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a href="{{ route('admin.users.index') }}" class="block bg-indigo-600 text-white p-4 rounded hover:bg-indigo-700 transition">
-                Manage Users
+            <a href="{{ route('admin.teachers.index') }}" class="block bg-indigo-600 text-white p-4 rounded hover:bg-indigo-700 transition">
+                Manage Teacher 
             </a>
             <a href="{{ route('admin.students.index') }}" class="block bg-green-600 text-white p-4 rounded hover:bg-green-700 transition">
                 Manage Students

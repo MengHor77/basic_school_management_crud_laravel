@@ -91,7 +91,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     // Admin manages users and other resources
     Route::resources([
-        'users'     => UserController::class,
+        // 'users'     => UserController::class,
         'students'  => StudentController::class,
         'courses'   => CourseController::class,
         'teachers'  => TeacherController::class,

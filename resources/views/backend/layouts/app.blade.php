@@ -37,13 +37,26 @@
                 ];
                 @endphp
                 @foreach($menuItems as $item)
+                @php
+                // Check if the current route matches this menu item or any of its child routes
+                $isActive = request()->routeIs(str_replace('.index', '*', $item['route']));
+                @endphp
+
+                @if($isActive)
                 <a href="{{ route($item['route']) }}"
-                 class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
-                 {{ request()->routeIs( str_replace('.index','*',$item['route']) ) ? 'bg-indigo-900 font-semibold' : '' }}">
+                    class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition bg-indigo-900 font-semibold text-white">
                     <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
                     <span class="menu-text">{{ $item['label'] }}</span>
                 </a>
+                @else
+                <a href="{{ route($item['route']) }}"
+                    class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white">
+                    <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
+                    <span class="menu-text">{{ $item['label'] }}</span>
+                </a>
+                @endif
                 @endforeach
+
 
                 <!-- Logout -->
                 <form method="POST" action="{{ route('admin.logout') }}">
