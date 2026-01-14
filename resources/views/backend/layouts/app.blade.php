@@ -23,7 +23,7 @@
             </div>
 
             <!-- Navigation -->
-            <nav class="flex-1 mt-4 space-y-1 px-1 overflow-y-auto">
+            <nav class="flex-1 mt-6 space-y-1 px-1 overflow-y-auto">
 
                 @php
                 $menuItems = [
@@ -38,9 +38,8 @@
                 @endphp
 
                 @foreach($menuItems as $item)
-                <a href="{{ route($item['route']) }}" 
-                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
-                    {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
+                <a href="{{ route($item['route']) }}" class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
+                {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
                     <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
                     <span class="menu-text">{{ $item['label'] }}</span>
                 </a>
@@ -59,7 +58,6 @@
             <div class="p-4 text-xs text-gray-300 text-center border-t border-indigo-600">
                 &copy; {{ date('Y') }} School Management
             </div>
-
         </aside>
 
         <!-- ================= MOBILE SIDEBAR ================= -->
@@ -73,8 +71,7 @@
 
                 <nav class="flex-1 space-y-1 overflow-y-auto">
                     @foreach($menuItems as $item)
-                    <a href="{{ route($item['route']) }}" 
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-indigo-600 transition">
+                    <a href="{{ route($item['route']) }}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-indigo-600 transition">
                         <i class="{{ $item['icon'] }}"></i>
                         <span>{{ $item['label'] }}</span>
                     </a>
@@ -93,14 +90,16 @@
         <!-- ================= MAIN CONTENT ================= -->
         <main class="flex-1 flex flex-col overflow-hidden">
 
-            <!-- Top Bar -->
-            <div class="bg-yellow-400 p-4 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <span class="font-semibold">Menu Filter</span>
-                    <input type="search" id="menuSearch" placeholder="Search menu..." 
-                        class="px-3 py-1.5 rounded-md border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <!-- Top Bar with Dropdown Search -->
+            <div class="bg-yellow-400 p-4 flex justify-between items-center relative">
+                <div class="flex-1 relative">
+                    <input type="text" id="menuSearch" placeholder="Search menu..." 
+                        class="w-full px-3 py-1.5 rounded-md text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    
+                    <!-- Dropdown -->
+                    <div id="menuDropdown" class="absolute left-0 right-0 mt-1 bg-white shadow-lg rounded-md max-h-60 overflow-y-auto hidden z-50"></div>
                 </div>
-                <div class="font-semibold">Profile</div>
+                <div class="font-semibold ml-3">Profile</div>
             </div>
 
             <!-- Content Area -->
@@ -118,14 +117,12 @@
             <div class="bg-green-600 p-3 shrink-0">
                 <div class="flex justify-between items-center text-white text-sm">
 
-                    <!-- Info -->
                     <div>
                         Showing <span class="font-semibold">1</span> to
                         <span class="font-semibold">10</span> of
                         <span class="font-semibold">120</span> results
                     </div>
 
-                    <!-- Pagination -->
                     <div class="flex items-center gap-1">
                         <button class="px-3 py-1 rounded bg-green-700 hover:bg-green-800">&laquo;</button>
                         <button class="px-3 py-1 rounded bg-white text-green-700 font-semibold">1</button>
@@ -178,15 +175,49 @@
         setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
     };
 
-    // Sidebar menu filter
-    const searchInput = document.getElementById('menuSearch');
-    const menuItems = document.querySelectorAll('.menu-item');
+    // ================= MENU DROPDOWN FILTER =================
+    const menuSearchInput = document.getElementById('menuSearch');
+    const menuDropdown = document.getElementById('menuDropdown');
 
-    searchInput.addEventListener('input', () => {
-        const keyword = searchInput.value.toLowerCase().trim();
-        menuItems.forEach(item => {
-            item.classList.toggle('hidden', !item.textContent.toLowerCase().includes(keyword));
-        });
+    // Collect menu data from sidebar
+    const menuData = Array.from(document.querySelectorAll('.menu-item')).map(item => {
+        return {
+            label: item.querySelector('.menu-text').textContent,
+            href: item.getAttribute('href')
+        };
+    });
+
+    menuSearchInput.addEventListener('input', () => {
+        const keyword = menuSearchInput.value.toLowerCase().trim();
+        menuDropdown.innerHTML = '';
+
+        if (!keyword) {
+            menuDropdown.classList.add('hidden');
+            return;
+        }
+
+        const matches = menuData.filter(item => item.label.toLowerCase().includes(keyword));
+
+        if (matches.length === 0) {
+            menuDropdown.innerHTML = `<div class="px-3 py-2 text-gray-500 text-sm">No results found</div>`;
+        } else {
+            matches.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "px-3 py-2 cursor-pointer hover:bg-indigo-100 text-gray-800";
+                div.textContent = item.label;
+                div.onclick = () => window.location.href = item.href;
+                menuDropdown.appendChild(div);
+            });
+        }
+
+        menuDropdown.classList.remove('hidden');
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuSearchInput.contains(e.target) && !menuDropdown.contains(e.target)) {
+            menuDropdown.classList.add('hidden');
+        }
     });
     </script>
 
