@@ -114,52 +114,52 @@
 
     <!-- Scripts -->
     <script>
-    // Desktop sidebar toggle
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggleSidebar');
-    const title = document.getElementById('sidebarTitle');
-    const menuTexts = document.querySelectorAll('.menu-text');
+        // Desktop sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const title = document.getElementById('sidebarTitle');
+        const menuTexts = document.querySelectorAll('.menu-text');
 
-    let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+        let isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
 
-    function updateSidebar() {
-        if (isCollapsed) {
-            sidebar.classList.remove('w-64');
-            sidebar.classList.add('w-20');
-            title.classList.add('hidden');
-            menuTexts.forEach(el => el.classList.add('hidden'));
-        } else {
-            sidebar.classList.remove('w-20');
-            sidebar.classList.add('w-64');
-            title.classList.remove('hidden');
-            menuTexts.forEach(el => el.classList.remove('hidden'));
+        function updateSidebar() {
+            if (isCollapsed) {
+                sidebar.classList.remove('w-64');
+                sidebar.classList.add('w-20');
+                title.classList.add('hidden');
+                menuTexts.forEach(el => el.classList.add('hidden'));
+            } else {
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-64');
+                title.classList.remove('hidden');
+                menuTexts.forEach(el => el.classList.remove('hidden'));
+            }
         }
-    }
 
-    updateSidebar();
-
-    toggleBtn.addEventListener('click', () => {
-        isCollapsed = !isCollapsed;
-        localStorage.setItem('sidebar-collapsed', isCollapsed);
         updateSidebar();
-    });
 
-    // Mobile sidebar toggle
-    const mobileSidebar = document.getElementById('mobileSidebar');
-    const mobileToggle = document.getElementById('mobileToggle');
-    const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+        toggleBtn.addEventListener('click', () => {
+            isCollapsed = !isCollapsed;
+            localStorage.setItem('sidebar-collapsed', isCollapsed);
+            updateSidebar();
+        });
 
-    mobileToggle.addEventListener('click', () => {
-        mobileSidebar.classList.remove('hidden');
-        setTimeout(() => {
-            mobileSidebar.querySelector('aside').classList.remove('-translate-x-full');
-        }, 50);
-    });
+        // Mobile sidebar toggle
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const closeMobileSidebar = document.getElementById('closeMobileSidebar');
 
-    closeMobileSidebar.addEventListener('click', () => {
-        mobileSidebar.querySelector('aside').classList.add('-translate-x-full');
-        setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
-    });
+        mobileToggle.addEventListener('click', () => {
+            mobileSidebar.classList.remove('hidden');
+            setTimeout(() => {
+                mobileSidebar.querySelector('aside').classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        closeMobileSidebar.addEventListener('click', () => {
+            mobileSidebar.querySelector('aside').classList.add('-translate-x-full');
+            setTimeout(() => mobileSidebar.classList.add('hidden'), 300);
+        });
     </script>
 
 </body>
