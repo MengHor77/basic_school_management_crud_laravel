@@ -130,7 +130,7 @@
                     <div id="profileDropdown"
                         class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg hidden z-50">
                         <a href="{{ route('admin.settings.index') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-100">
+                            class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-indigo-300">
                             Profile
                         </a>
                         <!-- Add more links if needed -->
@@ -275,4 +275,4 @@
 
 </body>
 
-</html> 
+</html>
