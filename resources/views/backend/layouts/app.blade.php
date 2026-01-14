@@ -119,10 +119,11 @@
                     </div>
                 </div>
                 <div class="relative ml-3 font-semibold">
+                    <!-- Profile Button -->
                     <button id="profileBtn"
-                        class="flex items-center gap-2 text-white hover:text-gray-200 focus:outline-none">
-                        <i class="fa-solid fa-user-circle text-xl"></i>
-                        Admin
+                        class="flex items-center gap-2 text-white hover:text-gray-200 focus:outline-none px-2 py-1 rounded-lg md:px-3 md:py-2 transition">
+                        <i class="fa-solid fa-user-circle text-xl md:text-2xl"></i>
+                        <span class="hidden md:inline">Admin</span>
                         <i class="fa-solid fa-chevron-down text-sm"></i>
                     </button>
 
@@ -130,12 +131,20 @@
                     <div id="profileDropdown"
                         class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg hidden z-50">
                         <a href="{{ route('admin.settings.index') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-indigo-300">
+                            class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-indigo-300 transition">
                             Profile
                         </a>
-                        <!-- Add more links if needed -->
+                        <!-- Additional links -->
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-red-600 rounded-lg hover:bg-red-100 transition">
+                                Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
+
             </div>
 
             <!-- Content Area -->
