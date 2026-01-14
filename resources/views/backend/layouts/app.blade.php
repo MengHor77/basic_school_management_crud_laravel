@@ -36,11 +36,10 @@
                 ['route' => 'admin.settings.index', 'label' => 'Settings', 'icon' => 'fa-solid fa-gear'],
                 ];
                 @endphp
-
                 @foreach($menuItems as $item)
                 <a href="{{ route($item['route']) }}"
-                    class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
-                {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'bg-indigo-900 font-semibold' : '' }}">
+                 class="menu-item flex items-center gap-3 px-4 py-2 rounded-lg transition hover:bg-indigo-600 hover:text-white 
+                 {{ request()->routeIs( str_replace('.index','*',$item['route']) ) ? 'bg-indigo-900 font-semibold' : '' }}">
                     <i class="{{ $item['icon'] }} text-lg w-5 text-center"></i>
                     <span class="menu-text">{{ $item['label'] }}</span>
                 </a>
