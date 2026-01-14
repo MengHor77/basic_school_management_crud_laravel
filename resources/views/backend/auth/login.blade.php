@@ -1,6 +1,6 @@
 @extends('frontend.layout.app')
 
-@section('title', 'User Login')
+@section('title', 'admin Login')
 
 @section('content')
 

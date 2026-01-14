@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Models\Admin;
 
 class SettingController extends Controller
 {
@@ -15,47 +16,42 @@ class SettingController extends Controller
         return view('backend.settings.index', compact('admin'));
     }
 
+   // Update profile
     public function update(Request $request, $id)
     {
-        $admin = auth('admin')->user();
-
-        if ($admin->id != $id) {
-            abort(403);
-        }
+        $admin = Admin::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('admins')->ignore($admin->id),
-            ],
-            'password' => 'nullable|min:6|confirmed',
+            'email' => 'required|email|unique:admins,email,'.$admin->id,
+            'password' => 'nullable|confirmed|min:6',
         ]);
 
         $admin->name = $request->name;
         $admin->email = $request->email;
 
-        if ($request->filled('password')) {
-            $admin->password = Hash::make($request->password);
+        if($request->password){
+            $admin->password = bcrypt($request->password);
         }
 
         $admin->save();
 
-        return redirect()->route('admin.login')->with('success', 'Account updated successfully');
+        return redirect()->route('admin.login')->with('success', 'Account updated successfully!');
     }
 
-    public function destroy($id)
+    // Delete account
+    public function destroy(Request $request, $id)
     {
-        $admin = auth('admin')->user();
+        $admin = Admin::findOrFail($id);
 
-        if ($admin->id != $id) {
-            abort(403);
+        // Validate password
+        if(!\Hash::check($request->delete_password, $admin->password)){
+            return redirect()->back()->withErrors(['delete_password' => 'Incorrect password.']);
         }
 
-        auth('admin')->logout();
         $admin->delete();
 
-        return redirect()->route('admin.login')->with('success', 'Account deleted successfully');
+        return redirect()->route('admin.login')->with('success', 'Account deleted successfully!');
     }
+
 }
