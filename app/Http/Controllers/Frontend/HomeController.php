@@ -10,9 +10,11 @@ class HomeController extends Controller
 {
      public function index()
     {
-        $courses = Course::where('is_active', 1)->get();
-        $teachers = Teacher::where('is_active', 1)->get();
+        $courses = Course::all();
+        $teachers = Teacher::all();
 
         return view('frontend.home.index', compact('courses', 'teachers'));
+    
     }
+
 }
