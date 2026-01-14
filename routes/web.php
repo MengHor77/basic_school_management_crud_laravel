@@ -103,3 +103,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
         Route::resource('reports', ReportController::class)->only(['index','show']);
 
 });
+
+
+Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+
+    // Profile settings page
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+
+    // Update profile
+    Route::put('settings/{id}', [SettingController::class, 'update'])->name('settings.update');
+
+    // Delete profile
+    Route::delete('settings/{id}', [SettingController::class, 'destroy'])->name('settings.destroy');
+});
+

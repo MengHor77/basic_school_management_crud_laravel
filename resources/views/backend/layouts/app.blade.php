@@ -276,4 +276,3 @@
 </body>
 
 </html> 
-//is D:\project_laravel_year3\basic_school_management_crud_laravel\resources\views\backend\layouts\app.blade.php
