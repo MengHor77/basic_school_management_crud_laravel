@@ -108,8 +108,12 @@
 {{-- ================= TEACHERS SECTION ================= --}}
 <section class="pb-20">
     <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">Teachers</h2>
-        <div class="h-1 w-20 bg-indigo-600 mx-auto mt-2 rounded-full"></div>
+        <div class="inline-block">
+            <h2 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">
+                Teachers
+            </h2>
+            <div class="h-1 w-full bg-indigo-600 mt-2 rounded-full"></div>
+        </div>
     </div>
 
     @if($teachers->count())
