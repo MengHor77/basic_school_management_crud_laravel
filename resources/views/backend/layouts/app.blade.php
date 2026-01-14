@@ -18,7 +18,7 @@
 
             <!-- Header -->
             <div class="flex items-center justify-between p-4 bg-indigo-800 border-b border-indigo-600">
-                <h1 id="sidebarTitle" class="text-xl font-bold whitespace-nowrap">Admin Panel</h1>
+                <h1 id="sidebarTitle" class="text-xl font-bold whitespace-nowrap">SM Admin</h1>
                 <button id="toggleSidebar" class="text-2xl font-bold hover:text-gray-300 transition">☰</button>
             </div>
 
