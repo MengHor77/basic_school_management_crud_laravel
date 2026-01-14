@@ -42,7 +42,7 @@ class SettingController extends Controller
 
         $admin->save();
 
-        return back()->with('success', 'Account updated successfully');
+        return redirect()->route('admin.login')->with('success', 'Account updated successfully');
     }
 
     public function destroy($id)
@@ -56,7 +56,6 @@ class SettingController extends Controller
         auth('admin')->logout();
         $admin->delete();
 
-        return redirect()->route('admin.login')
-            ->with('success', 'Account deleted successfully');
+        return redirect()->route('admin.login')->with('success', 'Account deleted successfully');
     }
 }
