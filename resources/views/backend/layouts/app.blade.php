@@ -188,8 +188,24 @@
         sidebar.classList.toggle('w-20', isCollapsed);
         sidebar.classList.toggle('w-64', !isCollapsed);
         title.classList.toggle('hidden', isCollapsed);
-        menuTexts.forEach(el => el.classList.toggle('hidden', isCollapsed));
+
+        menuTexts.forEach(el => {
+            el.classList.toggle('hidden', isCollapsed);
+            const parent = el.parentElement;
+
+            if (isCollapsed) {
+                // Center the icon horizontally
+                parent.classList.add('justify-center');
+                parent.classList.remove('justify-start');
+            } else {
+                // Restore normal spacing
+                parent.classList.remove('justify-center');
+                parent.classList.add('justify-start');
+            }
+        });
     }
+
+
     updateSidebar();
 
     toggleBtn.onclick = () => {
