@@ -5,20 +5,44 @@
 @section('content')
 
 {{-- ================= HERO SECTION ================= --}}
-<div class="relative bg-indigo-900 rounded-2xl overflow-hidden mb-14 shadow-2xl">
-    <div class="absolute inset-0 opacity-20">
-        <img src="{{ asset('storage/herosection/home.png') }}" alt="course" class="w-full h-full object-cover">
+<section class="relative h-screen mb-16 overflow-hidden rounded-2xl shadow-2xl flex items-center">
+
+    {{-- Background Image --}}
+    <div class="absolute inset-0">
+        <img src="{{ asset('storage/herosection/home.png') }}" alt="Online Learning Platform"
+            class="w-full h-full object-cover">
+        {{-- Dark Overlay --}}
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-900/80 via-indigo-900/60 to-indigo-800/50"></div>
     </div>
-    <div class="relative max-w-7xl mx-auto py-16 px-8 sm:py-24">
-        <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl text-center">
-            Expand your knowledge
+
+    {{-- Content --}}
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Build Skills for the
+            <span class="block text-indigo-300">Future You Want</span>
         </h1>
-        <p class="mt-6 text-xl text-indigo-100 max-w-3xl mx-auto text-center">
-            Discover our premier courses designed to advance your technical skills and career, guided by industry-expert
-            instructors.
+
+        <p class="mt-6 text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            Learn from industry-experienced instructors through carefully designed courses
+            that help you grow, upskill, and advance your career with confidence.
         </p>
+
+        {{-- CTA Buttons --}}
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ route('user.login') }}"
+                class="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition-all">
+                Explore Courses
+            </a>
+
+            <a href="{{ route('user.register') }}"
+                class="inline-flex items-center justify-center px-8 py-3 rounded-xl border border-indigo-300 text-indigo-100 font-semibold hover:bg-white/10 transition-all">
+                Get Started
+            </a>
+        </div>
     </div>
-</div>
+
+</section>
+
 
 {{-- ================= COURSES SECTION ================= --}}
 <section class="mb-20">
