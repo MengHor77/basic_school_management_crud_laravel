@@ -29,7 +29,7 @@
         <aside id="sidebar" class="bg-indigo-700 text-white w-64 flex-col transition-all duration-300 hidden md:flex">
 
             <!-- Header -->
-            <div class="flex items-center justify-between p-4 bg-indigo-800 border-b border-indigo-600">
+            <div class="flex items-center justify-between p-6 bg-indigo-800 border-b border-indigo-600">
                 <h1 id="sidebarTitle" class="text-xl font-bold whitespace-nowrap">SM Admin</h1>
                 <button id="toggleSidebar" class="text-2xl font-bold hover:text-gray-300 transition">☰</button>
             </div>
@@ -170,39 +170,6 @@
                     @yield('content')
                 </div>
             </div>
-
-            <!-- Footer-->
-
-            <!-- ================= FOOTER ================= -->
-            <footer class="bg-white border-t border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-
-                    <!-- Left -->
-                    <div class="text-sm text-gray-600">
-                        © {{ date('Y') }} <span class="font-semibold text-indigo-600">School Management System</span>.
-                        All rights reserved.
-                    </div>
-
-                    <!-- Center -->
-                    <div class="flex items-center gap-4 text-gray-500">
-                        <a href="#" class="hover:text-indigo-600 transition">
-                            <i class="fa-solid fa-house"></i>
-                        </a>
-                        <a href="#" class="hover:text-indigo-600 transition">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </a>
-                        <a href="#" class="hover:text-indigo-600 transition">
-                            <i class="fa-solid fa-envelope"></i>
-                        </a>
-                    </div>
-
-                    <!-- Right -->
-                    <div class="text-sm text-gray-500">
-                        Version <span class="font-medium text-gray-700">1.0.0</span>
-                    </div>
-
-                </div>
-            </footer>
 
         </main>
     </div>
