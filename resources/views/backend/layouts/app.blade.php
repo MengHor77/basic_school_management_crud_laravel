@@ -10,6 +10,18 @@
 </head>
 
 <body class="bg-gray-100 text-gray-800">
+    {{-- ================= FLASH MESSAGE ================= --}}
+    @if(session('success'))
+    <div id="flashMessage" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if(session('error'))
+    <div id="flashMessage" class="fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50">
+        {{ session('error') }}
+    </div>
+    @endif
 
     <div class="flex h-screen">
 
@@ -280,6 +292,15 @@
             profileDropdown.classList.add('hidden');
         }
     });
+
+    // Auto-hide flash message after 3 seconds
+    const flashMessage = document.getElementById('flashMessage');
+    if (flashMessage) {
+        setTimeout(() => {
+            flashMessage.classList.add('opacity-0', 'transition', 'duration-500');
+            setTimeout(() => flashMessage.remove(), 500);
+        }, 3000);
+    }
     </script>
 
 </body>

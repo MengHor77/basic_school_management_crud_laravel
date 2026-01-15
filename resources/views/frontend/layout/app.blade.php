@@ -5,62 +5,67 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Frontend')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+
 </head>
 
-<body class="bg-gray-100 text-gray-800 antialiased">
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <!-- ================= HEADER ================= -->
-    <header class="bg-indigo-300 p-1">
+    {{-- ================= HEADER ================= --}}
+    <header class="bg-white shadow-sm border-b">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
-            <!-- Logo / Title -->
-            <h1 class="text-xl font-bold text-indigo-600">
+            {{-- Logo --}}
+            <h1 class="text-xl font-extrabold text-indigo-600 tracking-wide">
                 School Management
             </h1>
 
-            <!-- Auth Area -->
+            {{-- Auth --}}
             <div class="flex items-center gap-4">
                 @auth('web')
-                <img src="{{ asset('storage/profile/' . (Auth::guard('web')->user()->image ?? 'image.png')) }}"
-                    class="w-10 h-10 rounded-full border border-gray-300 object-cover">
+                    <img src="{{ asset('storage/profile/' . (Auth::guard('web')->user()->image ?? 'image.png')) }}"
+                        class="w-10 h-10 rounded-full border object-cover">
 
-                <form action="{{ route('user.logout') }}" method="POST">
-                    @csrf
-                    <button class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
-                        Logout
-                    </button>
-                </form>
+                    <form action="{{ route('user.logout') }}" method="POST">
+                        @csrf
+                        <button class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
+                            Logout
+                        </button>
+                    </form>
                 @else
-                <a href="{{ route('user.login') }}"
-                    class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
-                    Login
-                </a>
+                    <a href="{{ route('user.login') }}"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
+                        Login
+                    </a>
 
-                <img src="{{ asset('storage/profile/image.png') }}"
-                    class="w-10 h-10 rounded-full border border-gray-300 object-cover">
+                    <img src="{{ asset('storage/profile/image.png') }}"
+                        class="w-10 h-10 rounded-full border object-cover">
                 @endauth
             </div>
-
         </div>
     </header>
 
-    <!-- ================= NAVIGATION ================= -->
-    <nav class="bg-indigo-600 py-5">
+    {{-- ================= NAVIGATION ================= --}}
+    <nav class="bg-indigo-600">
         <div class="container mx-auto px-6">
-            <ul class="flex gap-2 py-3 text-sm font-medium text-white">
+            <ul class="flex items-center gap-3 py-4 text-sm font-semibold text-white">
 
                 @php
-                $activeClass = 'bg-indigo-300 text-indigo-600 hover:shadow-xl rounded-full px-4 py-2 transition';
-                $normalClass = 'px-4 py-2 rounded-full hover:bg-indigo-500 hover:shadow-xl hover:text-white transition';
+                    $activeClass = 'bg-white text-indigo-600 shadow rounded-full px-5 py-2';
+                    $normalClass = 'px-5 py-2 rounded-full hover:bg-indigo-500 transition';
                 @endphp
 
                 <li>
                     <a href="{{ route('frontend.home') }}"
-                        class="{{ request()->routeIs('frontend.home') ? $activeClass : $normalClass }}"
-                        aria-label="Home">
-                        <i class="fa fa-home text-base"></i>
+                        class="{{ request()->routeIs('frontend.home') ? $activeClass : $normalClass }}">
+                        <i class="fa fa-home"></i>
                     </a>
                 </li>
 
@@ -84,87 +89,67 @@
                         Contact
                     </a>
                 </li>
-
             </ul>
         </div>
     </nav>
 
+    {{-- ================= MAIN ================= --}}
+   
+    <main class="container mx-auto px-6 py-10 min-h-[70vh]">
 
-    <!-- ================= MAIN CONTENT ================= -->
-    <main class="container mx-auto px-6 py-8 min-h-[70vh]">
-        @yield('content')
-    </main>
+    {{-- Flash Messages --}}
+    @if(session('success'))
+        <div class="mb-6 p-4 rounded-xl bg-green-100 border border-green-300 text-green-700 flex items-center gap-3">
+            <i class="fa fa-check-circle text-green-600"></i>
+            <span class="font-medium">{{ session('success') }}</span>
+        </div>
+    @endif
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-indigo-300 text-gray-900 py-8">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+    @if(session('error'))
+        <div class="mb-6 p-4 rounded-xl bg-red-100 border border-red-300 text-red-700 flex items-center gap-3">
+            <i class="fa fa-exclamation-circle text-red-600"></i>
+            <span class="font-medium">{{ session('error') }}</span>
+        </div>
+    @endif
 
-            <div class="text-center md:text-left">
-                <h2 class="text-xl font-bold text-gray-900">School Management System</h2>
-                <p class="text-gray-700 text-sm">Empowering education with modern technology</p>
+    @yield('content')
+</main>
+
+
+    {{-- ================= FOOTER ================= --}}
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            {{-- Brand --}}
+            <div>
+                <h2 class="text-xl font-bold text-white mb-2">
+                    School Management System
+                </h2>
+                <p class="text-sm text-gray-400">
+                    Empowering education with modern technology and professional learning solutions.
+                </p>
             </div>
 
-            <div class="flex gap-6 text-sm font-medium">
-
-                <a href="{{ route('frontend.home') }}" class="{{ request()->routeIs('frontend.home') 
-        ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1 flex items-center gap-1' 
-        : 'text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1' }}" aria-label="Home">
-                    <i class="fa fa-home"></i>
-                </a>
-
-
-                <a href="{{ route('frontend.myCourse') }}" class="{{ request()->routeIs('frontend.myCourse') 
-            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
-            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
-                    My Courses
-                </a>
-
-                <a href="{{ route('frontend.about') }}" class="{{ request()->routeIs('frontend.about') 
-            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
-            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
-                    About Us
-                </a>
-
-                <a href="{{ route('frontend.contact') }}" class="{{ request()->routeIs('frontend.contact') 
-            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-700 pb-1' 
-            : 'text-gray-700 hover:text-gray-900 transition-colors' }}">
-                    Contact
-                </a>
-
+            {{-- Links --}}
+            <div class="flex flex-col gap-3 text-sm font-medium">
+                <a href="{{ route('frontend.home') }}" class="hover:text-white transition">Home</a>
+                <a href="{{ route('frontend.myCourse') }}" class="hover:text-white transition">My Courses</a>
+                <a href="{{ route('frontend.about') }}" class="hover:text-white transition">About</a>
+                <a href="{{ route('frontend.contact') }}" class="hover:text-white transition">Contact</a>
             </div>
 
-            <div class="flex gap-4">
-                <!-- Facebook -->
-                <a href="#" class="hover:text-blue-600 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.877v-6.987h-2.54V12h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.463h-1.26c-1.242 0-1.63.772-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z" />
-                    </svg>
-                </a>
-
-                <!-- Twitter -->
-                <a href="#" class="hover:text-blue-400 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.379 4.482A13.938 13.938 0 011.671 3.149 4.917 4.917 0 003.195 9.723a4.897 4.897 0 01-2.228-.616v.062a4.918 4.918 0 003.946 4.827 4.996 4.996 0 01-2.224.084 4.924 4.924 0 004.6 3.417A9.868 9.868 0 010 21.543a13.92 13.92 0 007.548 2.212c9.142 0 14.307-7.721 13.995-14.646A9.935 9.935 0 0024 4.557z" />
-                    </svg>
-                </a>
-
-                <!-- Instagram -->
-                <a href="#" class="hover:text-pink-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.344 3.608 1.319.975.975 1.257 2.242 1.319 3.608.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.344 2.633-1.319 3.608-.975.975-2.242 1.257-3.608 1.319-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.344-3.608-1.319-.975-.975-1.257-2.242-1.319-3.608-.058-1.266-.07-1.645-.07-4.85s.012-3.584.07-4.85c.062-1.366.344-2.633 1.319-3.608.975-.975 2.242-1.257 3.608-1.319C8.416 2.175 8.796 2.163 12 2.163z" />
-                    </svg>
-                </a>
+            {{-- Social --}}
+            <div class="flex items-center gap-5">
+                <a href="#" class="hover:text-blue-500 transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-sky-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
 
-        <div class="mt-6 text-center text-gray-800 text-sm">
+        <div class="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
             &copy; {{ date('Y') }} School Management System. All rights reserved.
         </div>
     </footer>
 
 </body>
-
 </html>

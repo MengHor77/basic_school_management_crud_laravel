@@ -62,13 +62,14 @@ class UserController extends Controller
         // 1️⃣ Check Admin first
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('success', 'Admin logged in successfully!');
         }
 
         // 2️⃣ Check normal user
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('frontend.home'));
+             $request->session()->reflash();
+            return redirect()->intended(route('frontend.home'))->with('success', 'Logged in successfully!');
         }
 
         // 3️⃣ Neither matched → show login again with error

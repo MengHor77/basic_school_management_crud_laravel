@@ -29,6 +29,20 @@
 
         {{-- CTA Buttons --}}
         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+
+            @auth
+            {{-- Logged-in users --}}
+            <a href="#courses"
+                class="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition-all">
+                Explore Courses
+            </a>
+
+            <a href="#courses"
+                class="inline-flex items-center justify-center px-8 py-3 rounded-xl border border-indigo-300 text-indigo-100 font-semibold hover:bg-white/10 transition-all">
+                View Courses
+            </a>
+            @else
+            {{-- Guests --}}
             <a href="{{ route('user.login') }}"
                 class="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition-all">
                 Explore Courses
@@ -38,7 +52,10 @@
                 class="inline-flex items-center justify-center px-8 py-3 rounded-xl border border-indigo-300 text-indigo-100 font-semibold hover:bg-white/10 transition-all">
                 Get Started
             </a>
+            @endauth
+
         </div>
+
     </div>
 
 </section>
