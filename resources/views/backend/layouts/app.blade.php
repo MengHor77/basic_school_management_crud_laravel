@@ -171,26 +171,38 @@
                 </div>
             </div>
 
-            <!-- Footer / Pagination -->
-            <div class="bg-green-600 p-3 shrink-0">
-                <div class="flex justify-between items-center text-white text-sm">
+            <!-- Footer-->
 
-                    <div>
-                        Showing <span class="font-semibold">1</span> to
-                        <span class="font-semibold">10</span> of
-                        <span class="font-semibold">120</span> results
+            <!-- ================= FOOTER ================= -->
+            <footer class="bg-white border-t border-gray-200">
+                <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+
+                    <!-- Left -->
+                    <div class="text-sm text-gray-600">
+                        © {{ date('Y') }} <span class="font-semibold text-indigo-600">School Management System</span>.
+                        All rights reserved.
                     </div>
 
-                    <div class="flex items-center gap-1">
-                        <button class="px-3 py-1 rounded bg-green-700 hover:bg-green-800">&laquo;</button>
-                        <button class="px-3 py-1 rounded bg-white text-green-700 font-semibold">1</button>
-                        <button class="px-3 py-1 rounded bg-green-700 hover:bg-green-800">2</button>
-                        <button class="px-3 py-1 rounded bg-green-700 hover:bg-green-800">3</button>
-                        <button class="px-3 py-1 rounded bg-green-700 hover:bg-green-800">&raquo;</button>
+                    <!-- Center -->
+                    <div class="flex items-center gap-4 text-gray-500">
+                        <a href="#" class="hover:text-indigo-600 transition">
+                            <i class="fa-solid fa-house"></i>
+                        </a>
+                        <a href="#" class="hover:text-indigo-600 transition">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        <a href="#" class="hover:text-indigo-600 transition">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
+
+                    <!-- Right -->
+                    <div class="text-sm text-gray-500">
+                        Version <span class="font-medium text-gray-700">1.0.0</span>
                     </div>
 
                 </div>
-            </div>
+            </footer>
 
         </main>
     </div>

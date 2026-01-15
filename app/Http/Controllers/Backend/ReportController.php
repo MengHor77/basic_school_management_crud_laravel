@@ -13,7 +13,7 @@ class ReportController extends Controller
     {
         // Get all users (students) with enrolled courses
         $students = User::with('myCourses.course') // myCourses relationship
-                        ->paginate(10);
+                        ->paginate(2);
 
         return view('backend.reports.index', compact('students'));
     }

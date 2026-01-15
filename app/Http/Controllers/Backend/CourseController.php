@@ -11,9 +11,14 @@ class CourseController extends Controller
     // Display a listing of the courses
     public function index()
     {
-        $courses = Course::orderBy('created_at', 'desc')->get();
-        return view('backend.courses.index', compact('courses'));
+        $courses = Course::orderBy('id','desc')->paginate(3);
+
+        return view('backend.courses.index', [
+            'courses' => $courses,
+            'paginator' => $courses, // <== used by layout
+        ]);
     }
+
 
     // Show the form for creating a new course
     public function create()

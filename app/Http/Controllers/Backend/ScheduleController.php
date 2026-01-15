@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
@@ -11,11 +12,16 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function index()
+        public function index()
     {
-        $schedules = Schedule::with(['course', 'teacher', 'student'])->get();
+        $schedules = Schedule::with(['course', 'teacher'])
+            ->orderBy('day')
+            ->orderBy('start_time')
+            ->paginate(3);
+
         return view('backend.schedule.index', compact('schedules'));
     }
+
 
     public function create()
     {

@@ -71,4 +71,6 @@
             </tbody>
         </table>
     </div>
+    <x-pagination :paginator="$teachers" />
+
 @endsection

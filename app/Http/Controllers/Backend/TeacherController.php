@@ -13,8 +13,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::all();  // Fetch all teachers
-        return view('backend.teachers.index', compact('teachers'));
+      $teachers = Teacher::orderBy('id', 'desc')->paginate(3);
+    return view('backend.teachers.index', compact('teachers'));
     }
 
     /**

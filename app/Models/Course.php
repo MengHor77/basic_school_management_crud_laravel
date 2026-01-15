@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MyCourse;
+use App\Models\User;
+use App\Models\Teacher;
 
 class Course extends Model
 {
@@ -18,26 +21,27 @@ class Course extends Model
         'is_active',
     ];
 
+    // One-to-many: Course has many enrollments
     public function myCourses()
     {
         return $this->hasMany(MyCourse::class);
     }
-    
-  public function students()
+
+    // Many-to-many: Course has many students
+    public function students()
     {
         return $this->belongsToMany(
-            \App\Models\Student::class,
+            User::class,
             'my_courses', // pivot table
             'course_id',  // FK to courses.id
-            'user_id'     // FK to students.id
+            'user_id'     // FK to users.id
         )->withPivot('enrolled_date')
          ->withTimestamps();
     }
 
+    // One-to-one: Course belongs to a teacher
     public function teacher()
     {
-        return $this->belongsTo(\App\Models\Teacher::class);
+        return $this->belongsTo(Teacher::class);
     }
-
-
 }

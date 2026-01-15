@@ -42,7 +42,7 @@
             @endforeach
         </tbody>
     </table>
-
-    {{ $students->links() }}
 </div>
+ <!-- Pagination -->
+    <x-pagination :paginator="$students" />
 @endsection

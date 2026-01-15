@@ -11,12 +11,15 @@ use App\Models\MyCourse;
 class StudentController extends Controller
 {
     // Show all students
-   public function index()
-{
-    // Fetch all users (students) with their enrolled courses
-    $students = User::with('myCourses.course')->paginate(10);
-    return view('backend.students.index', compact('students'));
-}
+    public function index()
+    {
+        // Fetch all users (students) with their enrolled courses
+        $students = User::with('myCourses.course')->paginate(3);
+        return view('backend.students.index', [
+        'students' => $students,
+        'paginator' => $students, // Pass paginator explicitly
+    ]);
+    }
 
 
     // Show create form
