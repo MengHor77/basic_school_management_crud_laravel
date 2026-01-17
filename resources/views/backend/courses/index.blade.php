@@ -65,6 +65,7 @@
 </div>
 
 {{-- Pagination --}}
-<x-pagination :paginator="$courses" />
+
+@include('backend.components.pagination', ['paginator' => $courses])
 
 @endsection

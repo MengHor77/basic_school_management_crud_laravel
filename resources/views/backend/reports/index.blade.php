@@ -48,5 +48,6 @@
 
 @endif
 <!-- Pagination -->
-<x-pagination :paginator="$students" />
+@include('backend.components.pagination', ['paginator' => $students])
+
 @endsection
