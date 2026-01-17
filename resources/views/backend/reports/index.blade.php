@@ -36,10 +36,8 @@
                 @endif
             </td>
             <td class="border px-4 py-2">
-                <a href="{{ route('admin.reports.show', $student->id) }}"
-                    class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                    View
-                </a>
+                {{-- Use the reportActions component --}}
+                <x-reportActions :student="$student" />
             </td>
         </tr>
         @endforeach
@@ -47,6 +45,7 @@
 </table>
 
 @endif
+
 <!-- Pagination -->
 @include('backend.components.pagination', ['paginator' => $students])
 

@@ -73,6 +73,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('backend.components.courseTable', 'courseTable');
 
 
+          // Backend Schedule Management Components
+        Blade::component('backend.components.schedulesActions', 'schedulesActions');
+        Blade::component('backend.components.schedulesTable', 'schedulesTable');
+
+        // Backend report Management Components
+        Blade::component('backend.components.reportActions', 'reportActions');
+
 
         // ----------------------
         // Share global data

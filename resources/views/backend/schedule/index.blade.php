@@ -72,4 +72,25 @@
 {{-- Pagination --}}
 @include('backend.components.pagination', ['paginator' => $schedules])
 
+@endsection@extends('backend.layouts.app')
+
+@section('content')
+<h1 class="text-3xl font-bold mb-6">Schedules List</h1>
+
+<a href="{{ route('admin.schedule.create') }}"
+    class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+    Add New Schedule
+</a>
+
+@if(session('success'))
+<div class="mb-4 p-3 bg-green-200 text-green-800 rounded">
+    {{ session('success') }}
+</div>
+@endif
+
+{{-- Use the new schedules table component --}}
+<x-schedulesTable :schedules="$schedules" />
+
+{{-- Pagination --}}
+@include('backend.components.pagination', ['paginator' => $schedules])
 @endsection
