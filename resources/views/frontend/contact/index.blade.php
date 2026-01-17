@@ -17,11 +17,12 @@
     <x-contactForm action="{{ route('frontend.contact.submit') }}" buttonText="Send Message" />
 
     {{-- Contact Info Cards --}}
-    <div class="mt-12 grid md:grid-cols-3 gap-6 text-gray-700 text-center">
-        <x-cardContactInfo title="Email" value="piseth125125@gmail.com" icon="📧" />
-        <x-cardContactInfo title="Phone" value="+1 234 567 890" icon="📞" />
-        <x-cardContactInfo title="Address" value="123 Main Street, Phnom Penh, Cambodia" icon="🏠" />
+    <div class="grid md:grid-cols-3 gap-6">
+        <x-cardContactInfo title="Email" value="piseth125125@gmail.com" icon="fas fa-envelope" />
+        <x-cardContactInfo title="Phone" value="+1 234 567 890" icon="fas fa-phone" />
+        <x-cardContactInfo title="Address" value="123 Main Street, Phnom Penh, Cambodia" icon="fas fa-map-marker-alt" />
     </div>
+
 
     {{-- Google Map --}}
     <x-googleMap
