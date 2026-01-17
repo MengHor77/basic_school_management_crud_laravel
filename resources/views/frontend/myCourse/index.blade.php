@@ -20,58 +20,11 @@
     <h2>My Course</h2>
 </div>
 
-
 {{-- ================= COURSE LIST ================= --}}
 @if($myCourses->count())
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     @foreach($myCourses as $myCourse)
-    <div class="bg-white rounded-xl shadow-sm border hover:shadow-md transition">
-
-        <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900">
-                {{ $myCourse->course->title }}
-            </h3>
-
-            <p class="mt-3 text-sm text-gray-600 leading-relaxed">
-                {{ Str::limit($myCourse->course->description, 130) }}
-            </p>
-
-            <div class="mt-4 text-sm text-gray-500">
-                📅 {{ $myCourse->course->start_date }} → {{ $myCourse->course->end_date }}
-            </div>
-
-            {{-- ================= ACTIONS (AUTH ONLY) ================= --}}
-            @auth
-            <div class="mt-6 flex gap-3">
-
-                {{-- View Course --}}
-                <a href="{{ route('frontend.myCourse.showCourse', $myCourse->course->id) }}" class="flex-1 inline-flex items-center justify-center gap-2
-                          py-2.5 rounded-lg
-                          bg-indigo-600 text-white text-sm font-semibold
-                          hover:bg-indigo-700
-                          focus:outline-none focus:ring-2 focus:ring-indigo-400
-                          transition">
-                    View Course
-                </a>
-
-                {{-- Remove Course --}}
-                <form action="{{ route('myCourse.remove', $myCourse->id) }}" method="POST" class="flex-1">
-                    @csrf
-                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2
-                                   py-2.5 rounded-lg
-                                   bg-red-600 text-white text-sm font-semibold
-                                   hover:bg-red-700
-                                   focus:outline-none focus:ring-2 focus:ring-red-400
-                                   transition">
-                        Remove Course
-                    </button>
-                </form>
-
-            </div>
-            @endauth
-
-        </div>
-    </div>
+        <x-cardMyCourse :myCourse="$myCourse" />
     @endforeach
 </div>
 @else

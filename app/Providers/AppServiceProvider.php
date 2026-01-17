@@ -20,10 +20,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // component home page 
         Blade::component('frontend.components.callToActionButton', 'callToActionButton');
         Blade::component('frontend.components.cardCourse', 'cardCourse');
         Blade::component('frontend.components.cardTeacher', 'cardTeacher');
         Blade::component('frontend.components.enrollButton', 'enrollButton');
+
+        // component my courses page
+        Blade::component('frontend.components.viewCourseButton', 'viewCourseButton');
+        Blade::component('frontend.components.removeCourseButton', 'removeCourseButton');
+        Blade::component('frontend.components.cardMyCourse', 'cardMyCourse');
     }
 
 
