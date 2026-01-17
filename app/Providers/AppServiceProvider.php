@@ -64,10 +64,14 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('backend.components.statCard', 'statCard');
         Blade::component('backend.components.quickLink', 'quickLink');
 
+        // Backend Student Management Components
+        Blade::component('backend.components.studentTable', 'studentTable');
+        Blade::component('backend.components.studentActions', 'studentActions');
+
         // ----------------------
         // Share global data
         // ----------------------
-        
+
         View::composer('*', function ($view) {
             $view->with('totalStudents', User::where('is_delete', 0)->count());
             $view->with('enrollmentsToday', MyCourse::whereDate('created_at', now())->count());
