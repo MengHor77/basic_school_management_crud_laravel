@@ -68,6 +68,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('backend.components.studentTable', 'studentTable');
         Blade::component('backend.components.studentActions', 'studentActions');
 
+        // Backend course Management Components
+        Blade::component('backend.components.courseActions', 'courseActions');
+        Blade::component('backend.components.courseTable', 'courseTable');
+
+
+
         // ----------------------
         // Share global data
         // ----------------------
