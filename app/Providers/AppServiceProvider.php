@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\View;
+use App\Models\User;
+use App\Models\MyCourse;
+use App\Models\Course;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // ----------------------
+        // fronent components
+        // ----------------------
+
+
         //  home page component
         Blade::component('frontend.components.callToActionButton', 'callToActionButton');
         Blade::component('frontend.components.cardCourse', 'cardCourse');
@@ -43,6 +53,26 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('frontend.components.contactForm', 'contactForm');
         Blade::component('frontend.components.cardContactInfo', 'cardContactInfo');
         Blade::component('frontend.components.googleMap', 'googleMap');
+
+
+        // ----------------------
+        // Backend components
+        // ----------------------
+
+         // Backend Dashboard Components
+        Blade::component('backend.components.welcomeAdmin', 'welcomeAdmin');
+        Blade::component('backend.components.statCard', 'statCard');
+        Blade::component('backend.components.quickLink', 'quickLink');
+
+        // ----------------------
+        // Share global data
+        // ----------------------
+        
+        View::composer('*', function ($view) {
+            $view->with('totalStudents', User::where('is_delete', 0)->count());
+            $view->with('enrollmentsToday', MyCourse::whereDate('created_at', now())->count());
+            $view->with('totalCourses', Course::count());
+        });
     }
 
 
