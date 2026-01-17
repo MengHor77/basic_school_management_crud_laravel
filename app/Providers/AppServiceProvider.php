@@ -30,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('frontend.components.viewCourseButton', 'viewCourseButton');
         Blade::component('frontend.components.removeCourseButton', 'removeCourseButton');
         Blade::component('frontend.components.cardMyCourse', 'cardMyCourse');
+
+        // component about us page
+        Blade::component('frontend.components.cardOurMission', 'cardOurMission');
+        Blade::component('frontend.components.cardOurVision', 'cardOurVision');
+        Blade::component('frontend.components.cardOurCoreValues', 'cardOurCoreValues');
+        Blade::component('frontend.components.cardProfile', 'cardProfile');
     }
 
 
