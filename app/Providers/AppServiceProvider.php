@@ -20,22 +20,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // component home page 
+        //  home page component
         Blade::component('frontend.components.callToActionButton', 'callToActionButton');
         Blade::component('frontend.components.cardCourse', 'cardCourse');
         Blade::component('frontend.components.cardTeacher', 'cardTeacher');
         Blade::component('frontend.components.enrollButton', 'enrollButton');
 
-        // component my courses page
+        //  my courses pagecomponent
         Blade::component('frontend.components.viewCourseButton', 'viewCourseButton');
         Blade::component('frontend.components.removeCourseButton', 'removeCourseButton');
         Blade::component('frontend.components.cardMyCourse', 'cardMyCourse');
 
-        // component about us page
+        //  about us page component
         Blade::component('frontend.components.cardOurMission', 'cardOurMission');
         Blade::component('frontend.components.cardOurVision', 'cardOurVision');
         Blade::component('frontend.components.cardOurCoreValues', 'cardOurCoreValues');
         Blade::component('frontend.components.cardProfile', 'cardProfile');
+
+        //  Contact PageComponents
+        Blade::component('frontend.components.contactHeader', 'contactHeader');
+        Blade::component('frontend.components.alertMessage', 'alertMessage');
+        Blade::component('frontend.components.contactForm', 'contactForm');
+        Blade::component('frontend.components.cardContactInfo', 'cardContactInfo');
+        Blade::component('frontend.components.googleMap', 'googleMap');
     }
 
 
