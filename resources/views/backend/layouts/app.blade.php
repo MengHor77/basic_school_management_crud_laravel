@@ -81,8 +81,8 @@
                 </form>
             </nav>
 
-            <div class="p-4 text-xs text-gray-300 text-center border-t border-indigo-600">
-                &copy; {{ date('Y') }} School Management
+            <div class="p-4 text-xs text-gray-300 text-center border-t border-indigo-600 truncate">
+                &copy; {{ date('d-m-Y') }} School Management
             </div>
         </aside>
 
